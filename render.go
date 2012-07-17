@@ -15,6 +15,7 @@ import (
 
 type Slide struct {
 	Id      string
+	H1      string
 	Title   string
 	Class   string
 	Content string
@@ -40,7 +41,7 @@ func main() {
 	out := os.Stdout
 
 	if *outfile != "" {
-		if f, err := os.Open(*outfile); err != nil {
+		if f, err := os.OpenFile(*outfile, os.O_WRONLY | os.O_CREATE | os.O_TRUNC, 0644); err != nil {
 			fmt.Fprintf(os.Stderr, "opening output failed: %v\n", err)
 			os.Exit(1)
 		} else {
@@ -93,8 +94,10 @@ func ParseSlide(slidedir string, name string) ([]Slide, error) {
 					switch {
 						case fields[0] == "Title":
 							slide.Title = strings.TrimSpace(fields[1])
-						case fields[1] == "Class":
+						case fields[0] == "Class":
 							slide.Class = strings.TrimSpace(fields[1])
+						case fields[0] == "H1":
+							slide.H1 = strings.TrimSpace(fields[1])
 					}
 				}
 			}
