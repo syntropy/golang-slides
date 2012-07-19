@@ -314,6 +314,7 @@ SlideDeck.prototype.loadConfig_ = function(config) {
     this.makeBuildLists_();
   }
 
+/*
   if (settings.title) {
     document.title = settings.title.replace(/<br\/?>/, ' ') + ' - Google IO 2012';
     document.querySelector('[data-config-title]').innerHTML = settings.title;
@@ -366,6 +367,7 @@ SlideDeck.prototype.loadConfig_ = function(config) {
       document.querySelector('[data-config-presenter]').innerHTML = html;
     }
   }
+  */
 
   /* Left/Right tap areas. Default to including. */
   if (!!!('enableSlideAreas' in settings) || settings.enableSlideAreas) {

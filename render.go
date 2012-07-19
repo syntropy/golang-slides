@@ -13,6 +13,13 @@ import (
 	"bytes"
 )
 
+type Presentation struct {
+	Slides    []Slide
+	Title     string
+	Subtitle  string
+	Presenter string
+}
+
 type Slide struct {
 	Id      string
 	H1      string
@@ -49,13 +56,33 @@ func main() {
 		}
 	}
 
-	slides := []Slide{}
+	pres := &Presentation{Slides: []Slide{}}
 
 	if content, err := ioutil.ReadFile(flag.Arg(0)); err != nil {
 		fmt.Fprintf(os.Stderr, "%v", err)
 		os.Exit(1)
 	} else {
-		for _, name := range strings.Split(string(content), "\n") {
+		parts := strings.SplitN(string(content), "\n\n", 2)
+		body := ""
+		if len(parts) > 1 {
+			for _, header := range strings.Split(parts[0], "\n") {
+				fields := strings.SplitN(header, ":", 2)
+				if len(fields)==2 {
+					switch strings.ToLower(fields[0]) {
+					case "title":
+						pres.Title = strings.TrimSpace(fields[1])
+					case "subtitle":
+						pres.Subtitle = strings.TrimSpace(fields[1])
+					case "presenter":
+						pres.Presenter = strings.TrimSpace(fields[1])
+					}
+				}
+			}
+			body = parts[1]
+		} else {
+			body = parts[0]
+		}
+		for _, name := range strings.Split(body, "\n") {
 			if name == "" {
 				continue
 			}
@@ -63,12 +90,12 @@ func main() {
 				fmt.Fprintf(os.Stderr, "Error while parsing slide %s: %v\n", name, err)
 				os.Exit(1)
 			} else {
-				slides = append(slides, slide...)
+				pres.Slides = append(pres.Slides, slide...)
 			}
 		}
 	}
 
-	if err := RenderSlides(out, slides, *template); err != nil {
+	if err := RenderSlides(out, pres, *template); err != nil {
 		fmt.Fprintf(os.Stderr, "Error while rendering slides: %v\n", err)
 		os.Exit(1)
 	}
@@ -91,12 +118,12 @@ func ParseSlide(slidedir string, name string) ([]Slide, error) {
 			for _, header := range strings.Split(sections[0], "\n") {
 				fields := strings.SplitN(header, ":", 2)
 				if len(fields) == 2 {
-					switch {
-						case fields[0] == "Title":
+					switch strings.ToLower(fields[0]) {
+						case "title":
 							slide.Title = strings.TrimSpace(fields[1])
-						case fields[0] == "Class":
+						case "class":
 							slide.Class = strings.TrimSpace(fields[1])
-						case fields[0] == "H1":
+						case "h1":
 							slide.H1 = strings.TrimSpace(fields[1])
 					}
 				}
@@ -113,14 +140,11 @@ func ParseSlide(slidedir string, name string) ([]Slide, error) {
 
 }
 
-type TemplateArgs struct {
-	Slides []Slide
-}
 
-func RenderSlides(w io.WriteCloser, slides []Slide, template_file string) error {
+func RenderSlides(w io.WriteCloser, pres *Presentation, template_file string) error {
 	tmpl, err := template.ParseFiles(template_file)
 	if err == nil {
-		tmpl.Execute(w, TemplateArgs{Slides: slides})
+		tmpl.Execute(w, pres)
 	}
 	return err
 }

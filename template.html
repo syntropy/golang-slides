@@ -14,7 +14,7 @@ URL: https://code.google.com/p/io-2012-slides
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Go User Group Berlin</title>
+  <title>{{if .Title}}{{.Title | html}} {{if .Subtitle}} - {{.Subtitle | html}}{{end}} |{{end}} Go User Group Berlin</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
@@ -41,9 +41,9 @@ URL: https://code.google.com/p/io-2012-slides
   <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
   <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
   <hgroup class="auto-fadein">
-    <h1 data-config-title><!-- populated from slide_config.json --></h1>
-    <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
-    <p data-config-presenter><!-- populated from slide_config.json --></p>
+    {{if .Title}}<h1>{{.Title | html}}</h1>{{end}}
+    {{if .Subtitle}}<h2>{{.Subtitle | html}}</h2>{{end}}
+    {{if .Presenter}}<p>{{.Presenter | html}}</p>{{end}}
   </hgroup>
 </slide>
 
