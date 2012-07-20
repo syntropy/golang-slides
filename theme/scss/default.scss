@@ -2,7 +2,7 @@
 @import "compass/css3/columns";
 @import "compass/css3/user-interface";
 
-$social-tags: '#io12';
+$social-tags: '#golang';
 $brand-small-icon-size: 30px;
 
 $gray-1: #e6e6e6;
@@ -165,7 +165,7 @@ slides > slide {
   }
 
   &:not(.nobackground) {
-    //background: white url(../../images/google_developers_icon_128.png) ($brand-small-icon-size * 2) 98% no-repeat;
+    //background: white url(../../images/gopher_icon_128.png) ($brand-small-icon-size * 2) 98% no-repeat;
     //@include background-size($brand-small-icon-size $brand-small-icon-size);
 
     &:before {
@@ -174,7 +174,7 @@ slides > slide {
       position: absolute;
       bottom: $slide-top-bottom-padding / 2;
       left: $slide-left-right-padding;
-      background: url(../../images/google_developers_icon_128.png) no-repeat 0 50%;
+      background: url(../../images/gopher_icon_128.png) no-repeat 0 50%;
       @include background-size($brand-small-icon-size $brand-small-icon-size);
       padding-left: $brand-small-icon-size + 10;
       height: $brand-small-icon-size;
@@ -193,7 +193,7 @@ slides > slide {
   &.title-slide {
     &:after {
       content: '';
-      background: url(../../images/io2012_logo.png) no-repeat 100% 50%;
+      background: url(../../images/go-logo-blue.png) no-repeat 100% 50%;
       @include background-size(contain);
       position: absolute;
       bottom: $slide-top-bottom-padding;

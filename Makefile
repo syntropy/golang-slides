@@ -15,6 +15,9 @@ $(RENDER): $(RENDER).go
 	./$(RENDER) -o $@ -t $(HTML_TEMPLATE) -S $(SLIDE_DIR) $<
 
 clean:
-	$(RM) $(HTML_SLIDES) $(RENDER)
+	$(RM) $(HTML_SLIDES)
+
+distclean: clean
+	$(RM) $(RENDER)
 
 .PHONY: clean
