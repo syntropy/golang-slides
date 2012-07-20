@@ -10,7 +10,7 @@ var name string
 Initializing variables in the declaration is also possible. It can even derive the data type for you:
 
 <pre class="prettyprint" data-lang="go">
-var x, y, z int = 23, 42, 9001
+var x, y, z int = 23, 42, 1e6
 var name = "Max Mustermann"
 pi := 3.1415926 // short for var pi = ..., works only within functions
 </pre>
@@ -96,3 +96,45 @@ type LogMsg struct {
 }
 </pre>
 
+---
+Title: Using structs
+
+Fields in a struct can be accessed through ".":
+
+<pre class="prettyprint" data-lang="go">
+type Coordinate struct {
+	X, Y, Z float64
+}
+
+c := Coordinate{1.9, 2.2, -2.5}
+// you can also name the fields in the initialization:
+c := Coordinate{Z:1.1, X:9.3, Y:0.1}
+</pre>
+
+Visibility of fields to other packages is controlled by the case of a field
+name's first character. Upper-case field names are public, lower-case
+field-names are private.
+
+---
+Title: Pointers
+
+Go has pointers, but no pointer arithmetics (well, at least none without the unsafe package).
+
+The fields of structs can be access through pointers in the same way as with
+structs: the dot operator is transparent here.
+
+<pre class="prettyprint" data-lang="go">
+c := Coordinate{0.0, 1.0, 2.0}
+x := &c                           // creates a pointer to c
+p := &Coordinate{3.0, 4.0, 5.0}   // creates a new Coordinate object and lets p point to it
+x.X, p.X = 23, 42                 // accessing fields
+</pre>
+
+For basic data types, you need to use the new operator:
+
+<pre class="prettyprint" data-lang="go">
+i := new(int)
+*i = 23
+
+c := new(Coordinate)
+</pre>
