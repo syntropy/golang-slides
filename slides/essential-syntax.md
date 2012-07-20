@@ -2,32 +2,40 @@ Title: Declaring Variables
 
 You can declare a list of variables including their data type with the var keyword:
 
-	var x, y, z int
-	var name string
+<pre class="prettyprint" data-lang="go">
+var x, y, z int
+var name string
+</pre>
 
 Initializing variables in the declaration is also possible. It can even derive the data type for you:
 
-	var x, y, z int = 23, 42, 9001
-	var name = "Max Mustermann"
-	pi := 3.1415926 // short for var pi = ..., works only within functions
+<pre class="prettyprint" data-lang="go">
+var x, y, z int = 23, 42, 9001
+var name = "Max Mustermann"
+pi := 3.1415926 // short for var pi = ..., works only within functions
+</pre>
 
 ---
 Title: Constants
 
 Constants are declared like variables, but with the const keyword. They can be optionally typed:
 
-	const pi = 3.1415926
-	const e float64 = 2.71828
+<pre class="prettyprint" data-lang="go">
+const pi = 3.1415926
+const e float64 = 2.71828
+</pre>
 
 Untyped constants take the type that they need by the context:
 
-	const (
-		three = 3
-	)
-	var (
-		x int = three
-		y float64 = three
-	)
+<pre class="prettyprint" data-lang="go">
+const (
+	three = 3
+)
+var (
+	x int = three
+	y float64 = three
+)
+</pre>
 
 ---
 Title: Enumerated Constants
@@ -38,18 +46,20 @@ iota keyword is equivalent to the constant's position in the list, starting with
 constants without explicit value derive their value from the previous expression with an
 incremented iota.
 
-	const (
-		a = 23 + iota // a = 23
-		b             // b = 24
-		c             // c = 25
-	)
+<pre class="prettyprint" data-lang="go">
+const (
+	a = 23 + iota // a = 23
+	b             // b = 24
+	c             // c = 25
+)
 
-	const (
-		FOO = 1 << iota // FOO = 1
-		BAR             // BAR = 2
-		BAZ             // BAZ = 4
-		QUUX            // QUUX = 8
-	)
+const (
+	FOO = 1 << iota // FOO = 1
+	BAR             // BAR = 2
+	BAZ             // BAZ = 4
+	QUUX            // QUUX = 8
+)
+</pre>
 
 ---
 Title: Basic types
@@ -76,11 +86,13 @@ Title: Structs
 
 A struct contains a number of fields with a data type and a name.
 
-	type LogLevel int
+<pre class="prettyprint" data-lang="go">
+type LogLevel int
 
-	type LogMsg struct {
-		Level     LogLevel
-		Msg       string
-		Timestamp time.Time
-	}
+type LogMsg struct {
+	Level     LogLevel
+	Msg       string
+	Timestamp time.Time
+}
+</pre>
 
