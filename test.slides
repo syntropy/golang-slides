@@ -8,6 +8,8 @@ basic-types
 constants
 variables
 structs
+arrays
+slices
 maps
 pointers
 functions
