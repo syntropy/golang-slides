@@ -198,6 +198,7 @@ func add(x, y int) int {
 </pre>
 
 You can have more than one return value, and you can name them:
+
 <pre class="prettyprint" data-lang="go">
 func fib(a, b int) (x, y int) {
 	x, y = b, a + b
@@ -209,6 +210,7 @@ func fib(a, b int) (x, y int) {
 Title: Functions as values
 
 In Go, functions can also be used as values:
+
 <pre class="prettyprint" data-lang="go">
 mul := func(a, b int) int {
 	return a * b
@@ -220,6 +222,7 @@ fmt.Println(mul(3, 4))
 Title: Functions as closures
 
 In Go, functions are also closures:
+
 <pre class="prettyprint" data-lang="go">
 func create_id_generator() func() int {
 	id := 0
@@ -227,5 +230,81 @@ func create_id_generator() func() int {
 		id++
 		return id
 	}
+}
+</pre>
+---
+Title: If statements (1)
+
+If statements look like in C, with a few exceptions: the ( ) aren't necessary,
+and the { } are mandatory.
+
+<pre class="prettyprint" data-lang="go">
+if x < 0 {
+	// ... is executed if "x < 0" is true
+} else if y > 0 {
+	// ... is executed if "y > 0" is true
+} else {
+	// ... is executed otherwise
+}
+</pre>
+
+---
+Title: If statements (2)
+
+The if statement allows you to execute a statement before the actual condition.
+Variables declared in the statement are scoped to the if statement.
+
+<pre class="prettyprint" data-lang="go">
+if data, err := fetch(); err == nil {
+	process(data)
+} else {
+	fmt.Printf("an error occured while fetching data: %v\n", err)
+	return err
+}
+</pre>
+---
+Title: The switch statement
+
+The main difference of Go's switch statement to that of other languages is that
+case bodies break automatically. To prevent such an automatic break, Go provides
+the fallthrough statement. In addition, if you leave out the condition, switch
+can serve as a clean alternative to writing long if-then-else chains.
+
+<pre class="prettyprint" data-lang="go">
+switch x := foo(); x {
+case 0:
+case 1: fmt.Println("foobar")
+case 2: fmt.Println("x is 2")
+		fallthrough
+case 3: fmt.Println("quux")
+}
+
+switch {
+case x < 0: // ...
+case y > 0: // ...
+default:    // ...
+}
+</pre>
+---
+Title: Loops
+
+Go only has one loop: for. It looks like in C, except the ( ) are gone, and the
+{ } are mandatory. Pre statement, loop condition, and post statement are
+semicolon-separated.
+
+If you leave out pre and post statement or even all of the three statements,
+you can leave out the semicolons.
+
+<pre class="prettyprint" data-lang="go">
+for i := 0 ; i < 20 ; i++ {
+	// for loop like everyone knows it
+}
+
+for i < 30 {
+	// equivalent with C's while loop
+}
+
+for { 
+	// infinite loop
 }
 </pre>
