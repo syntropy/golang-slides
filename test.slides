@@ -4,4 +4,13 @@ Presenter: Andreas Krennmair
 
 hello_world
 hello_world_2.0
-essential-syntax
+basic-types
+constants
+variables
+structs
+maps
+pointers
+functions
+if
+switch
+for
