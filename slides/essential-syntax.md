@@ -138,3 +138,94 @@ i := new(int)
 
 c := new(Coordinate)
 </pre>
+---
+Title: Maps
+
+A map allows you store key-value pairs and retrieve the value by key. Maps must be created
+with make.
+
+<pre class="prettyprint" data-lang="go">
+var m map[string]Coordinate
+
+m = make(map[string]Coordinate
+// or:
+n := make(map[string]Coordinate)
+
+m["Couch"] = Coordinate{0.0, 0.0, 0.0}
+
+fmt.Printf("%#v", m["Couch"])
+
+o := map[string]Coordinate{
+	"foo": Coordinate{0.0, 1.0, 2.0},
+	"bar": Coordinate{3.0, 4.0, 5.0},
+}
+</pre>
+---
+Title: Working with maps
+
+Insert or update an element:
+
+<pre class="prettyprint" data-lang="go">
+m[key] = value
+</pre>
+
+Retrieve an element by key:
+<pre class="prettyprint" data-lang="go">
+value = m[key]
+</pre>
+
+Delete an element by key:
+<pre class="prettyprint" data-lang="go">
+delete(m, key)
+</pre>
+
+Test whether an element is present.  If an element for key was found, then ok
+is true. Otherwise, ok is false and value is zero.
+<pre class="prettyprint" data-lang="go">
+value, ok = m[key]
+</pre>
+
+---
+Title: Functions
+
+A function takes 0 or more arguments, and has 0 or more return values. Arguments
+are always named, return values can optionally be named.
+
+<pre class="prettyprint" data-lang="go">
+func add(x, y int) int {
+	return x + y
+}
+</pre>
+
+You can have more than one return value, and you can name them:
+<pre class="prettyprint" data-lang="go">
+func fib(a, b int) (x, y int) {
+	x, y = b, a + b
+	return
+}
+</pre>
+
+---
+Title: Functions as values
+
+In Go, functions can also be used as values:
+<pre class="prettyprint" data-lang="go">
+mul := func(a, b int) int {
+	return a * b
+}
+fmt.Println(mul(3, 4))
+</pre>
+
+---
+Title: Functions as closures
+
+In Go, functions are also closures:
+<pre class="prettyprint" data-lang="go">
+func create_id_generator() func() int {
+	id := 0
+	return func() int {
+		id++
+		return id
+	}
+}
+</pre>
