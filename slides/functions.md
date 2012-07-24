@@ -36,7 +36,7 @@ Title: Functions as closures
 In Go, functions are also closures:
 
 <pre class="prettyprint" data-lang="go">
-func create_id_generator() func() int {
+func CreateIDGenerator() <b>func() int</b> {
 	id := 0
 	return func() int {
 		id++
