@@ -23,6 +23,6 @@ Title: History of Go
 
     * Russ Cox: libtask for Unix
 
-* First release in September 2009.
+* First official announcement in November 2009.
 
-* Go 1 released in 2012.
+* Go 1 released in March 2012.
