@@ -159,3 +159,206 @@ Title: Combining goroutines and channels
 
 <h2>Do not communicate by sharing memory; instead, share memory by communicating.</h2>
 
+* The theoretical foundation of goroutines and channels are Communicating Sequential Processes (CSP) by C. A. R. Hoare.
+
+---
+Title: Third iteration: what's missing?
+
+* So far, we have an application where client connections send everything to a central processing goroutine.
+
+* Now we need to extend this with the following parts:
+
+    * a way to register new clients
+
+    * a way to unregister clients that disconnected
+
+    * messages sent by a client shall be broadcast to all clients
+
+---
+Title: Third iteration: registering new clients
+
+First, we create all channel to register new clients and hand it to all the functions that need it:
+<pre class="prettyprint" data-lang="go">
+addchan := make(chan Client)
+go handleMessages(msgchan, addchan)
+// ...
+go handleConnection(conn, msgchan, addchan)
+</pre>
+
+That's what the `Client` type looks like:
+
+<pre class="prettyprint" data-lang="go">
+type Client struct {
+	conn net.Conn
+	ch   chan<- string
+}
+</pre>
+
+---
+Title: Third iteration: registering new clients
+
+Then, in `handleConnection`, we register the client, identified by the 
+connection, together with a channel with which `handleConnection` will receive 
+messages that are sent back to the client.
+
+<pre class="prettyprint" data-lang="go">
+func handleConnection(c net.Conn, msgchan chan<- string, addchan chan<- Client) {
+	ch := make(chan string)
+
+	addchan <- Client{c, ch}
+	// ...
+}
+</pre>
+
+---
+Title: Third iteration: registering new clients and broadcasting messages
+
+in `handleMessages`, new clients are received and added to a map that contains
+all active connections together with the associated channel. New messages are
+also broadcast here.
+
+<pre class="prettyprint" data-lang="go">
+func handleMessages(msgchan <-chan string, addchan <-chan Client) {
+	clients := make(map[net.Conn]chan<- string)
+	for {
+		select {
+		case msg := <-msgchan:
+			for _, ch := range clients {
+				go func(mch chan<- string) { mch <- "\033[1;33;40m" + msg + "\033[m\r\n" }(ch)
+			}
+		case client := <-addchan:
+			clients[client.conn] = client.ch
+		}
+	}
+}
+</pre>
+
+---
+Title: Third iteration: unregistering disconnected clients
+
+To unregister disconnected clients, we create another channel and again hand it 
+to all the functions that need it:
+
+<pre class="prettyprint" data-lang="go">
+// in func main()
+rmchan := make(chan net.Conn)
+
+go handleMessages(msgchan, addchan, rmchan)
+// ...
+go handleConnection(conn, msgchan, addchan, rmchan)
+</pre>
+
+---
+Title: Third iteration: unregistering disconnected clients
+
+To unregister disconnected connections, we simply send them to this channel in the `handleConnection` function
+right at the end.
+
+<pre class="prettyprint" data-lang="go">
+func handleConnection(c net.Conn, msgchan chan<- string, addchan chan<- Client, rmchan chan<- net.Conn) {
+	// ...
+	// at the end of the function:
+	rmchan <- c
+}
+</pre>
+
+---
+Title: Third iteration: unregistering disconnected clients
+
+In `handleMessages`, these disconnected connections are received and removed from the map.
+
+<pre class="prettyprint" data-lang="go">
+func handleMessages(msgchan <-chan string, addchan <-chan Client, rmchan <-chan net.Conn) {
+	clients := make(map[net.Conn]chan<- string)
+
+	for {
+		select {
+		// ...
+		case conn := <-rmchan:
+			delete(clients, conn)
+		}
+	}
+}
+</pre>
+
+---
+Title: Third iteration: fixing the `handleConnection` function
+
+* the `handleConnection` function needs to both receive data and forward it to `handleMessages` and send other messages back to the client.
+
+* blocking reads and `select` don't work together... so, we need to move the reading to another goroutine.
+
+* the `handleConnection` should also query the newly connected user for the desired nickname.
+
+---
+Title: Third iteration: fixing the handleConnection function
+
+<pre class="prettyprint" data-lang="go">
+func handleConnection(c net.Conn, msgchan chan<- string, addchan chan<- Client, rmchan chan<- net.Conn) {
+	ch := make(chan string)
+	msgs := make(chan string)
+	addchan <- Client{c, ch}
+	go func() {
+		defer close(msgs)
+		bufc := bufio.NewReader(c)
+		c.Write([]byte("\033[1;30;41mWelcome to the fancy demo chat!\033[0m\r\nWhat is your nick? "))
+		nick, _, err := bufc.ReadLine()
+		if err != nil {
+			return
+		}
+		nickname := string(nick)
+		c.Write([]byte("Welcome, " + nickname + "!\r\n\r\n"))
+		msgs <- "New user " + nickname + " has joined the chat room."
+</pre>
+
+---
+Title: Third iteration: fixing the handleConnection function
+
+<pre class="prettyprint" data-lang="go">
+		for {
+			line, _, err := bufc.ReadLine()
+			if err != nil {
+				break
+			}
+			msgs <- nickname + ": " + string(line)
+		}
+		msgs <- "User " + nickname + " left the chat room."
+	}()
+LOOP:
+	for {
+		select {
+		case msg, ok := <-msgs:
+			if !ok {
+				break LOOP
+			}
+			msgchan <- msg
+</pre>
+
+---
+Title: Third iteration: fixing the handleConnection function
+
+<pre class="prettyprint" data-lang="go">
+		case msg := <-ch:
+			_, err := c.Write([]byte(msg))
+			if err != nil {
+				break LOOP
+			}
+		}
+	}
+
+	c.Close()
+	fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
+	rmchan <- c
+}
+</pre>
+
+---
+Title: Third iteration: finished!
+
+We now have a fully functional telnet multi-user chat application, in about 100 lines of Go code.
+
+That wasn't too terrible, was it?
+
+The full source code for these examples is available here:
+
+[https://github.com/akrennmair/telnet-chat](https://github.com/akrennmair/telnet-chat)
