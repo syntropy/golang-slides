@@ -251,7 +251,7 @@ go handleConnection(conn, msgchan, addchan, rmchan)
 ---
 Title: Third iteration: unregistering disconnected clients
 
-To unregister disconnected connections, we simply send them to this channel in the `handleConnection` function
+To unregister disconnected clients, we simply send the connection to this channel in the `handleConnection` function
 right at the end.
 
 <pre class="prettyprint" data-lang="go">
@@ -282,7 +282,7 @@ func handleMessages(msgchan <-chan string, addchan <-chan Client, rmchan <-chan 
 </pre>
 
 ---
-Title: Third iteration: fixing the `handleConnection` function
+Title: Third iteration: fixing the handleConnection function
 
 * the `handleConnection` function needs to both receive data and forward it to `handleMessages` and send other messages back to the client.
 
