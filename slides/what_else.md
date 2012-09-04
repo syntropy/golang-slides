@@ -103,7 +103,7 @@ func (b *Bar) Whoop() {
 ---
 Title: Standard library: web applications
 
-Go's standard library is reach in features that allow getting quickly into programming web-related tools and servers.
+Go's standard library is rich in features that allow getting quickly into programming web-related tools and servers.
 
 * HTTP server, client (`net/http`)
 
