@@ -2,7 +2,7 @@ Title: A Practical Introduction to Go
 
 I could bore you with describing every single feature of Go one by one.
 
-...or, I could simply show you how to develop a simple network server that does 
+...or, I could simply show you how to develop a simple network server that does
 something useful and is easy to understand.
 
 ---
@@ -26,18 +26,17 @@ Title: First iteration: accepting connections
 <pre class="prettyprint" data-lang="go">
 package main
 
-import ( "fmt" ; "net" ; "os" )
+import ( "log"; "net" ; "os" )
 
 func main() {
 	ln, err := net.Listen("tcp", ":6000")
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 	for {
 		conn, err := ln.Accept()
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 			continue
 		}
 		go handleConnection(conn)
@@ -69,6 +68,8 @@ func handleConnection(c net.Conn) {
 ---
 Title: What are goroutines?
 
+Goroutines are
+
 * a function executing concurrently with other goroutines in the same address space.
 
 * very lightweight, small stack, grows and shrinks on demand.
@@ -94,7 +95,7 @@ Title: Second iteration: providing a communication channel
 	for {
 		conn, err := ln.Accept()
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 			continue
 		}
 
@@ -106,8 +107,7 @@ Title: Second iteration: printing all received messages
 
 <pre class="prettyprint" data-lang="go">
 func printMessages(msgchan <-chan string) {
-	for {
-		msg := <-msgchan
+	for msg := range msgchan {
 		fmt.Printf("new message: %s\n", msg)
 	}
 }
@@ -153,11 +153,11 @@ Title: Combining goroutines and channels
 
 * Usually, concurrent programming is hard and only low-level primitives are available. Managing concurrent access to shared variables is error-prone.
 
-* Go encourages another way of tackling concurrency instead: data is passed around between goroutines through channels. Only the responsible goroutine gets to modify data. Data races thus cannot occur.
+* Go encourages another way of tackling concurrency instead: data is passed around between goroutines through channels. Only the responsible goroutine gets to modify data. Thus data races cannot occur.
 
-* This way of designing concurrent programs can be subsumed with 
-
-<h2>Do not communicate by sharing memory; instead, share memory by communicating.</h2>
+* This way of designing concurrent programs can be subsumed with:
+  <i></i>
+  <h2>Do not communicate by sharing memory; instead, share memory by communicating.</h2>
 
 * The theoretical foundation of goroutines and channels are Communicating Sequential Processes (CSP) by C. A. R. Hoare.
 
@@ -170,14 +170,14 @@ Title: Third iteration: what's missing?
 
     * a way to register new clients
 
-    * a way to unregister clients that disconnected
+    * a way to unregister clients that have disconnected
 
     * messages sent by a client shall be broadcast to all clients
 
 ---
 Title: Third iteration: registering new clients
 
-First, we create all channel to register new clients and hand it to all the functions that need it:
+First, we create a channel to register new clients and hand it to all the functions that need it:
 <pre class="prettyprint" data-lang="go">
 addchan := make(chan Client)
 go handleMessages(msgchan, addchan)
@@ -197,8 +197,8 @@ type Client struct {
 ---
 Title: Third iteration: registering new clients
 
-Then, in `handleConnection`, we register the client, identified by the 
-connection, together with a channel with which `handleConnection` will receive 
+Then, in `handleConnection`, we register the client, identified by the
+connection, together with a channel with which `handleConnection` will receive
 messages that are sent back to the client.
 
 <pre class="prettyprint" data-lang="go">
@@ -236,7 +236,7 @@ func handleMessages(msgchan <-chan string, addchan <-chan Client) {
 ---
 Title: Third iteration: unregistering disconnected clients
 
-To unregister disconnected clients, we create another channel and again hand it 
+To unregister disconnected clients, we create another channel and – again – hand it
 to all the functions that need it:
 
 <pre class="prettyprint" data-lang="go">

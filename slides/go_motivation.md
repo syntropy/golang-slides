@@ -1,10 +1,10 @@
 Title: What is Go? Why Go?
 
-* People at Google saw need for a new systems language.
+* People at Google saw a need for a new systems language.
 
 * Systems programming has become too didfficult and too frustrating.
 
-* Aim to be easy: combine ease of programming of an interpreted dynamically typed language with efficiency and safety of a statically typed, compiled language.
+* Aim to be easy: combine ease of programming of an interpreted, dynamically typed language with efficiency and safety of a statically typed, compiled language.
 
 * Aim to be modern: support for networking and multi-core computing.
 
@@ -13,7 +13,7 @@ Title: What is Go? Why Go?
 ---
 Title: History of Go
 
-* Development started in 2007 at Google, by Ken Thompson, Rob Pike, Robert Griesemer, Russ Cox and others.
+* Development started in 2007 at Google by Ken Thompson, Rob Pike, Robert Griesemer, Russ Cox and others.
 
 * People involved have profound experience with system programming and operating systems.
 

@@ -13,7 +13,7 @@ Title: Object-oriented programming
 
 * Focus on simplicity, which may confuse users who already know other OO languages.
 
-* No inheritance
+* No inheritance.
 
 ---
 Title: Data types, methods and interfaces
@@ -58,8 +58,8 @@ func (c *Coordinate2D) DistanceToZero() int {
 ---
 Title: Interfaces
 
-Interfaces are implicit. Once you define a interface, every data type that implements the required
-methods fulfills the interface.
+Interfaces are implicit. Once you define an interface, every data type that implements the required
+methods fulfills that interface.
 
 <pre class="prettyprint" data-lang="go">
 type Reader interface {
@@ -87,16 +87,16 @@ You can embed an existing data type into a struct type. The struct type then inh
 <pre class="prettyprint" data-lang="go">
 type Foo int
 
-func (f *Foo) Bla() { 
-	fmt.Println("called Bla()") 
+func (f *Foo) Bla() {
+	fmt.Println("called Bla()")
 }
 
 type Bar struct {
 	Foo
 }
 
-func (b *Bar) Whoop() { 
-	fmt.Println("called Whoop()") 
+func (b *Bar) Whoop() {
+	fmt.Println("called Whoop()")
 }
 </pre>
 
@@ -122,17 +122,17 @@ import (
    "fmt"
    "net/http"
 )
-func handler(w http.ResponseWriter, r *http.Request) { 
-   fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:]) 
+func handler(w http.ResponseWriter, r *http.Request) {
+   fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
 }
 func main() {
    http.ListenAndServe(":8000", http.HandlerFunc(handler))
 }
 </pre>
 
-More sophisticated features are available, including prefix-based routing and 
-TLS. For an even more complete experience that builds upon Go's standard 
-library, using the [Gorilla web toolkit](http://gorilla-web.appspot.com/) is 
+More sophisticated features are available, including prefix-based routing and
+TLS. For an even more complete experience that builds upon Go's standard
+library, using the [Gorilla web toolkit](http://gorilla-web.appspot.com/) is
 recommended.
 ---
 Title: JSON
