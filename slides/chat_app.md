@@ -241,7 +241,7 @@ to all the functions that need it:
 
 <pre class="prettyprint" data-lang="go">
 // in func main()
-rmchan := make(chan net.Conn)
+rmchan := make(chan Client)
 
 go handleMessages(msgchan, addchan, rmchan)
 // ...
@@ -251,21 +251,23 @@ go handleConnection(conn, msgchan, addchan, rmchan)
 ---
 Title: Third iteration: unregistering disconnected clients
 
-To unregister disconnected clients, we simply send the connection to this channel in the `handleConnection` function
-right at the end.
+To unregister disconnected clients, we simply send them to this channel in the `handleConnection` function
+when the function returns.
 
 <pre class="prettyprint" data-lang="go">
-func handleConnection(c net.Conn, msgchan chan<- string, addchan chan<- Client, rmchan chan<- net.Conn) {
+func handleConnection(c net.Conn, msgchan chan<- string, addchan chan<- Client, rmchan chan<- Client) {
 	// ...
-	// at the end of the function:
-	rmchan <- c
+	defer func() {
+		rmchan <- c
+	}()
+	// ...
 }
 </pre>
 
 ---
 Title: Third iteration: unregistering disconnected clients
 
-In `handleMessages`, these disconnected connections are received and removed from the map.
+In `handleMessages`, these disconnected clients are received and their connection removed from the map.
 
 <pre class="prettyprint" data-lang="go">
 func handleMessages(msgchan <-chan string, addchan <-chan Client, rmchan <-chan net.Conn) {
@@ -275,7 +277,7 @@ func handleMessages(msgchan <-chan string, addchan <-chan Client, rmchan <-chan 
 		select {
 		// ...
 		case conn := <-rmchan:
-			delete(clients, conn)
+			delete(clients, conn.ch)
 		}
 	}
 }
@@ -294,61 +296,77 @@ Title: Third iteration: fixing the handleConnection function
 Title: Third iteration: fixing the handleConnection function
 
 <pre class="prettyprint" data-lang="go">
-func handleConnection(c net.Conn, msgchan chan<- string, addchan chan<- Client, rmchan chan<- net.Conn) {
-	ch := make(chan string)
-	msgs := make(chan string)
-	addchan <- Client{c, ch}
-	go func() {
-		defer close(msgs)
-		bufc := bufio.NewReader(c)
-		c.Write([]byte("\033[1;30;41mWelcome to the fancy demo chat!\033[0m\r\nWhat is your nick? "))
-		nick, _, err := bufc.ReadLine()
+func handleConnection(c net.Conn, msgchan chan<- string, addchan chan<- Client, rmchan chan<- Client) {
+	bufc := bufio.NewReader(c)
+	defer c.Close()
+	client := Client{
+			conn:     c,
+			nickname: promptNick(c, bufc),
+			ch:       make(chan string),
+	}
+	if strings.TrimSpace(client.nickname) == "" {
+		io.WriteString(c, "Invalid Username\n")
+		return
+	}
+</pre>
+
+---
+Title: Third iteration: fixing the handleConnection function
+
+<pre class="prettyprint" data-lang="go">
+	addchan <- client
+	defer func() {
+		msgchan <- fmt.Sprintf("User %s left the chat room.\n", client.nickname)
+		log.Printf("Connection from %v closed.\n", c.RemoteAddr())
+		rmchan <- client
+	}
+	io.WriteString(c, fmt.Sprintf("Welcome, %s!\n\n", client.nickname))
+	msgchan <- fmt.Sprintf("New user %s has joined the chat room.\n", client.nickname)
+
+	go client.ReadLinesInto(msgchan)
+	client.WriteLinesFrom(client.ch)
+}
+</pre>
+
+---
+Title: Third iteration: promptNick()
+
+<pre class="prettyprint" data-lang="go">
+func promptNick(c net.Conn, bufc *bufio.Reader) string {
+	io.WriteString(c, "\033[1;30;41mWelcome to the fancy demo chat!\033[0m\n")
+	io.WriteString(c, "What is your nick? ")
+	nick, _, _ := bufc.ReadLine()
+	return string(nick)
+}
+</pre>
+
+---
+Title: Third iteration: ReadLinesInto()
+
+<pre class="prettyprint" data-lang="go">
+func (c Client) ReadLinesInto(ch chan<- string) {
+	bufc := bufio.NewReader(c.conn)
+	for {
+		line, err := bufc.ReadString('\n')
+		if err != nil {
+			break
+		}
+		ch <- fmt.Sprintf("%s: %s", c.nickname, line)
+	}
+}
+</pre>
+
+---
+Title: Third iteration: WriteLinesFrom()
+
+<pre class="prettyprint" data-lang="go">
+func (c Client) WriteLinesFrom(ch <-chan string) {
+	for msg := range ch {
+		_, err := io.WriteString(c.conn, msg)
 		if err != nil {
 			return
 		}
-		nickname := string(nick)
-		c.Write([]byte("Welcome, " + nickname + "!\r\n\r\n"))
-		msgs <- "New user " + nickname + " has joined the chat room."
-</pre>
-
----
-Title: Third iteration: fixing the handleConnection function
-
-<pre class="prettyprint" data-lang="go">
-		for {
-			line, _, err := bufc.ReadLine()
-			if err != nil {
-				break
-			}
-			msgs <- nickname + ": " + string(line)
-		}
-		msgs <- "User " + nickname + " left the chat room."
-	}()
-LOOP:
-	for {
-		select {
-		case msg, ok := <-msgs:
-			if !ok {
-				break LOOP
-			}
-			msgchan <- msg
-</pre>
-
----
-Title: Third iteration: fixing the handleConnection function
-
-<pre class="prettyprint" data-lang="go">
-		case msg := <-ch:
-			_, err := c.Write([]byte(msg))
-			if err != nil {
-				break LOOP
-			}
-		}
 	}
-
-	c.Close()
-	fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
-	rmchan <- c
 }
 </pre>
 
