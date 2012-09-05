@@ -20,9 +20,9 @@ Title: First Example (1)
 <pre class="prettyprint" data-lang="go">
 package pwnam
 /*
-#include <sys/types.h>
-#include <pwd.h>
-#include <stdlib.h>
+#include &lt;sys/types.h&gt;
+#include &lt;pwd.h&gt;
+#include &lt;stdlib.h&gt;
 */
 import "C"
 import "unsafe"
@@ -47,7 +47,8 @@ func Getpwnam(name string) *Passwd {
 		Uid: uint32(cpw.pw_uid), 
 		Gid: uint32(cpw.pw_gid), 
 		Dir: C.GoString(cpw.pw_dir), 
-		Shell: C.GoString(cpw.pw_shell) }
+		Shell: C.GoString(cpw.pw_shell),
+	}
 }
 </pre>
 
@@ -69,8 +70,8 @@ Title: Linking Examples
 package pcap
 /*
 #cgo LDFLAGS: -lpcap
-#include <stdlib.h>
-#include <pcap.h>
+#include &lt;stdlib.h&gt;
+#include &lt;pcap.h&gt;
 */
 import "C"
 </pre>
@@ -80,8 +81,8 @@ package stfl
 /*
 #cgo pkg-config: stfl
 #cgo LDFLAGS: -lncursesw
-#include <stdlib.h>
-#include <stfl.h>
+#include &lt;stdlib.h&gt;
+#include &lt;stfl.h&gt;
 */
 import "C"
 </pre>

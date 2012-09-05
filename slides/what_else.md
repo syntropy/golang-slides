@@ -140,7 +140,6 @@ Title: JSON
 The simplest way to read/write JSON is to use `encoding/json`'s `Marshal()` and `Unmarshal()` functions.
 
 <pre class="prettyprint" data-lang="go">
-
 type Comment {
 	Id     int64  `json:"id"`
 	Author string `json:"author"`
@@ -148,6 +147,7 @@ type Comment {
 }
 
 // ...
+
 comment := &Comment{Id: 42, Author: "Anonymous Coward", Text: "First post!!11!"}
 if json_data, err := json.Marshal(comment); err == nil {
 	w.Header().Set("Content-Type", "application/json")
