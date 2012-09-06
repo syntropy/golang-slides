@@ -13,3 +13,5 @@ Title: Some useful Go-related links
 * A Tour of Go: [http://tour.golang.org/](http://tour.golang.org/)
 
 * An Introduction to Programming in Go: [http://www.golang-book.com/](http://www.golang-book.com/)
+
+* Go Concurrency Patterns: [http://www.youtube.com/watch?v=f6kdp27TYZs](http://www.youtube.com/watch?v=f6kdp27TYZs)
