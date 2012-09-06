@@ -62,7 +62,7 @@ func handleConnection(c net.Conn) {
 			break
 		}
 	}
-	fmt.Printf("Connection from %v closed.\n", c.RemoteAddr())
+	log.Printf("Connection from %v closed.", c.RemoteAddr())
 }
 </pre>
 ---
@@ -108,7 +108,7 @@ Title: Second iteration: printing all received messages
 <pre class="prettyprint" data-lang="go">
 func printMessages(msgchan <-chan string) {
 	for msg := range msgchan {
-		fmt.Printf("new message: %s\n", msg)
+		log.Printf("new message: %s", msg)
 	}
 }
 </pre>
