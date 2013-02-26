@@ -1,0 +1,187 @@
+Should I Go?
+27 Mar 2013
+
+Alexander Surma
+Voxelbrain, GDG Berlin Golang
+asu@voxelbrain.com
+http://github.com/surma
+@surmair
+
+* Hype
+
+You may have heared of Go. It’s been getting a lot of attention and
+therefore hate:
+
+- It’s undeservingly hyped
+- It’s too verbose
+- Everyone will stick with C
+- There’s no market
+- I can has exceptions?!
+
+(I’m looking at you, [[http://news.ycombinator.com][Hacker News]])
+
+* Go is boring
+
+- Uses new research, but no experiments
+- Consistency and pragmatism
+- Go is mothering you
+
+… and I like it. It’s become my main general purpose language.
+
+* Go is boring
+
+Designed (mainly) for:
+
+- large teams
+- multi-core systems
+- distributed systems
+- networking / web
+
+
+
+* What is Go?
+
+An open source (BSD licensed) project:
+
+- Language specification,
+- Small runtime (garbage collector, scheduler, etc),
+- Two compilers (`gc` and `gccgo`), cross-platform
+- 'Batteries included' standard library,
+- Tools (build, fetch, test, document, profile, format),
+- Documentation.
+
+* OOP but different
+
+Go is Object Oriented, but not in the usual way.
+
+- _no_ classes (methods may be declared on any type)
+- _no_ subtype inheritance
+- interfaces are satisfied _implicitly_ (structural typing)
+
+The result: simple pieces connected by small interfaces.
+
+* Go is about concurrency
+
+Go provides CSP-like concurrency primitives.
+
+- lightweight threads (_goroutines_)
+- typed thread-safe communication and synchronization (_channels_)
+
+The result: comprehensible, reasonable *concurrent* code	.
+
+* Code
+
+* Hello, go
+
+.play code/should_i_go/hello.go
+
+* Hello, net
+
+.play code/should_i_go/hello-net.go
+
+* Interfaces
+
+Did we just use `Fprintln` to write to a net connection?
+
+That's because a `Fprintln` writes to an `io.Writer`, and `net.Conn` is an `io.Writer`.
+
+.code code/should_i_go/hello-net.go /Fprintln/
+.code code/should_i_go/defs.go /Fprintln/
+.code code/should_i_go/defs.go /type.Writer/,/^}/
+.code code/should_i_go/defs.go /type.Conn/,/^}/
+
+* An echo server
+
+.play code/should_i_go/echo-no-concurrency.go
+
+* A closer look at io.Copy
+
+.code code/should_i_go/defs.go /Copy/,/func/
+.code code/should_i_go/defs.go /type.Writer/,/^}/
+.code code/should_i_go/defs.go /type.Reader/,/^}/
+.code code/should_i_go/defs.go /type.Conn/,/^}/
+
+* Goroutines
+
+Goroutines are lightweight threads that are managed by the Go runtime. To run a function in a new goroutine, just put "`go`" before the function call.
+
+.play code/should_i_go/goroutines.go
+
+* A concurrent echo server
+
+.play code/should_i_go/echo.go
+
+* Closures and return values
+
+.play code/should_i_go/closure.go
+
+* Channels
+
+.play code/should_i_go/sieve.go /START OMIT/,/END OMIT/
+
+* Batteries included
+
+- bufio
+- compress/gzip, compress/bzip2
+- crypto/aes, crypto/sha256, crypto/x509
+- encoding/json, encoding/xml
+- html/template
+- image/gif, image/jpeg, image/png
+- math/cmplx, math/big
+- net/http, net/mail, net/smtp
+- reflect
+- sync/atomic
+- unicode
+
+* If that’s not enough
+
+.code code/should_i_go/imports.go
+
+Dependencies will be automatically installed.
+
+* Documentation
+
+.link http://godoc.org/github.com/voxelbrain/goptions
+.iframe http://godoc.org/github.com/voxelbrain/goptions 500 970
+
+* Go 1.1
+
+- Inofficially announced to be released in Q1 2013
+- Backwards compatible (i.e. semantic versioning)
+
+This is from November!
+
+* Go 1.1 – Toolchain
+
+- Linux/ARM support for cgo,
+- Compiler improvements (escaping, inlining, softfloat)
+- Race detector
+- parallel, precise GC
+
+* Go 1.1 – Library
+
+- encoding/json more integrated, new Number type
+- Image library overhaul
+- Performance, performance, performance
+
+* Further reading
+
+All about Go:
+
+.link http://golang.org
+
+Andrew Gerrand’s Chat Roulette talk
+
+.link http://vimeo.com/53221560 Watch the talk on Vimeo
+
+"Go Concurrency Patterns" by Rob Pike:
+
+.link http://golang.org/s/concurrency-patterns
+
+* Further visiting
+
+GDG Berlin Golang
+
+.link http://gplus.to/gdgberlingolang
+
+Tomorrow 7pm @c-base: Go IDEs/Editors and a webservice in Go

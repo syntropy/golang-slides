@@ -1,0 +1,127 @@
+Synergy and Dystopy
+Go on Android DIY – A failed project
+
+Alexander Surma
+Voxelbrain, GDG Berlin Golang
+asu@voxelbrain.com
+http://gplus.to/surmair
+@surmair
+
+* Demographic Check
+
+* What is Go?
+
+An open source (BSD licensed) project:
+
+- Language specification,
+- Small runtime (garbage collector, scheduler, etc),
+- Two compilers (`gc` and `gccgo`), cross-platform
+- 'Batteries included' standard library,
+- Tools (build, fetch, test, document, profile, format),
+- Documentation.
+
+* Go is a 21st century language
+
+Go’s individual features are not new, yet Go’s specific combination
+of these features is novel.
+
+- CSP-like concurrency primitives
+- UTF-8 _all_ the way
+- Networking
+- Garbage collected (also: No pointer arithmetic)
+- Structural typing
+- _No_ dependencies
+
+The result: comprehensible, reasonable and small *concurrent* code, that uses
+small interfaces.
+
+* Cross-Compiling
+
+When using the `gc` toolchain, you are effectively cross-compiling all the time.
+
+Tools like [[https://github.com/laher/goxc][goxc]] do the heavy lifting for you.
+
+.code code/go_on_android/crosscompile.sh
+
+* Go on Android
+
+Googlers have been asked. The responses were usually prette evasive.
+
+Imma do it myself! *Why?* Why not! I'm a go nut.
+
+The aim was _not_ to replace the entire Android framework. GUIs are extraordinarily and surprisingly comfortable. I focused on computationally intensive tasks.
+
+.image imgs/gopherriding.png
+
+* Motivation
+
+- Do heavy stuff on bare metal
+- Nicer than C
+- Simplify networking and concurrency
+- Garbage collection
+
+*Concerns*
+
+- Separate process
+- Battery drain
+- Fault tolerance
+- Binary size (~3MB)
+- Root kind of necessary
+
+* Architecture
+
+Prototype uses a hand-rolled JSON protocol via HTTP and almost no abstractions. Daemon has to be started manually.
+
+Goal: RPC protocol using _Protocol_Buffers_ (type safety!) via unix domain sockets with automatic RPC stub generation. Daemon bundled into APK, started (and restarted) automatically.
+
+This stage was never reached :(
+
+* Prototype
+
+.image imgs/mandelgo.png
+
+* Unfair!
+
+- JavaRenderer is written using [[http://commons.apache.org/][Apache Commons]] for complex numbers, Go has complex numbers as a native type
+- As a consequence: Much more function calls for simple arithmetic operations in Java
+- Bare metal vs. VM
+
+A fair comparison would be between a C-written programm using JNI and Go. Go would probably lose (ever so slightly) due to protocol and language overhead.
+
+*Net*profit*: Language maintainability, stability and semantics
+
+* Problems
+
+- `chmod +x` on SDCard (FAT!). Alternative: /data/local/tmp
+- SELinux
+- Opening sockets/Creating pipes
+
+* Bottom line
+
+- Android is nice
+- Management overhead outweighs benefits (IMHO)
+
+*Future*game*changer*: Go team is working on making Go code callable from C.
+
+
+* Further reading
+
+All about Go:
+
+.link http://golang.org
+
+Andrew Gerrand’s Chat Roulette talk
+
+.link http://vimeo.com/53221560 Watch the talk on Vimeo
+
+"Go Concurrency Patterns" by Rob Pike:
+
+.link http://golang.org/s/concurrency-patterns
+
+* Further visiting
+
+GDG Berlin Golang
+
+.link http://gplus.to/gdgberlingolang
+
+Next meetup TBD!
