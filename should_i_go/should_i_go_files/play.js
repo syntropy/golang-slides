@@ -1,0 +1,1 @@
+document.write(unescape("%3Cscript src='%2Fstatic%2Fsocket.js' type='text/javascript'%3E%3C/script%3E"));document.write(unescape("%3Cscript src='%2Fstatic%2Fplay.js' type='text/javascript'%3E%3C/script%3E"));

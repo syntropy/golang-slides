@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://127.0.0.1:3999/go_on_android.slide#1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Synergy and Dystopy</title>
+    <meta charset="utf-8">
+    <script src="./go_on_android_files/slides.js"></script>
+  <meta name="viewport" content="width=1100,height=750"><meta name="apple-mobile-web-app-capable" content="yes"><style type="text/css"></style></head>
+
+  <body style="display: none" class="loaded">
+
+    <section class="slides layout-widescreen">
+      
+      <article class="current">
+        <h1>Synergy and Dystopy</h1>
+        <h3>Go on Android DIY – A failed project</h3>
+        
+        
+          <div class="presenter">
+            
+  
+  <p>
+    Alexander Surma
+  </p>
+  
+
+  
+  <p>
+    Voxelbrain, GDG Berlin Golang
+  </p>
+  
+
+          </div>
+        
+      </article>
+      
+  
+  
+      <article class="next">
+      
+        <h2>Demographic Check</h2>
+      
+      </article>
+  
+  
+  
+      <article class="far-next">
+      
+        <h3>What is Go?</h3>
+        
+  
+  <p>
+    An open source (BSD licensed) project:
+  </p>
+  
+
+  <ul>
+  
+    <li>Language specification,</li>
+  
+    <li>Small runtime (garbage collector, scheduler, etc),</li>
+  
+    <li>Two compilers (<code>gc</code> and <code>gccgo</code>), cross-platform</li>
+  
+    <li>'Batteries included' standard library,</li>
+  
+    <li>Tools (build, fetch, test, document, profile, format),</li>
+  
+    <li>Documentation.</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Go is a 21st century language</h3>
+        
+  
+  <p>
+    Go’s individual features are not new, yet Go’s specific combination
+<br>
+
+    of these features is novel.
+  </p>
+  
+
+  <ul>
+  
+    <li>CSP-like concurrency primitives</li>
+  
+    <li>UTF-8 <i>all</i> the way</li>
+  
+    <li>Networking</li>
+  
+    <li>Garbage collected (also: No pointer arithmetic)</li>
+  
+    <li>Structural typing</li>
+  
+    <li><i>No</i> dependencies</li>
+  
+  </ul>
+
+  
+  <p>
+    The result: comprehensible, reasonable and small <b>concurrent</b> code, that uses
+<br>
+
+    small interfaces.
+  </p>
+  
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Cross-Compiling</h3>
+        
+  
+  <p>
+    When using the <code>gc</code> toolchain, you are effectively cross-compiling all the time.
+  </p>
+  
+
+  
+  <p>
+    Tools like <a href="https://github.com/laher/goxc" target="_blank">goxc</a> do the heavy lifting for you.
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false"><!--{{.code code/go_on_android/crosscompile.sh}}
+--><pre>.
+├── darwin_386
+│&nbsp;&nbsp; └── mandelgo
+├── darwin_amd64
+│&nbsp;&nbsp; └── mandelgo
+├── freebsd_386
+│&nbsp;&nbsp; └── mandelgo
+├── freebsd_amd64
+│&nbsp;&nbsp; └── mandelgo
+├── linux_386
+│&nbsp;&nbsp; └── mandelgo
+├── linux_amd64
+│&nbsp;&nbsp; └── mandelgo
+├── linux_arm
+│&nbsp;&nbsp; └── mandelgo
+├── windows_386
+│&nbsp;&nbsp; └── mandelgo.exe
+└── windows_amd64
+    └── mandelgo.exe
+</pre></div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Go on Android</h3>
+        
+  
+  <p>
+    Googlers have been asked. The responses were usually prette evasive.
+  </p>
+  
+
+  
+  <p>
+    Imma do it myself! <b>Why?</b> Why not! I'm a go nut.
+  </p>
+  
+
+  
+  <p>
+    The aim was <i>not</i> to replace the entire Android framework. GUIs are extraordinarily and surprisingly comfortable. I focused on computationally intensive tasks.
+  </p>
+  
+
+<div class="image">
+  <img src="./go_on_android_files/gopherriding.png">
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Motivation</h3>
+        
+  <ul>
+  
+    <li>Do heavy stuff on bare metal</li>
+  
+    <li>Nicer than C</li>
+  
+    <li>Simplify networking and concurrency</li>
+  
+    <li>Garbage collection</li>
+  
+  </ul>
+
+  
+  <p>
+    <b>Concerns</b>
+  </p>
+  
+
+  <ul>
+  
+    <li>Separate process</li>
+  
+    <li>Battery drain</li>
+  
+    <li>Fault tolerance</li>
+  
+    <li>Binary size (~3MB)</li>
+  
+    <li>Root kind of necessary</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Architecture</h3>
+        
+  
+  <p>
+    Prototype uses a hand-rolled JSON protocol via HTTP and almost no abstractions. Daemon has to be started manually.
+  </p>
+  
+
+  
+  <p>
+    Goal: RPC protocol using <i>Protocol Buffers</i> (type safety!) via unix domain sockets with automatic RPC stub generation. Daemon bundled into APK, started (and restarted) automatically.
+  </p>
+  
+
+  
+  <p>
+    This stage was never reached :(
+  </p>
+  
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Prototype</h3>
+        
+<div class="image">
+  <img src="./go_on_android_files/mandelgo.png">
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Unfair!</h3>
+        
+  <ul>
+  
+    <li>JavaRenderer is written using <a href="http://commons.apache.org/" target="_blank">Apache Commons</a> for complex numbers, Go has complex numbers as a native type</li>
+  
+    <li>As a consequence: Much more function calls for simple arithmetic operations in Java</li>
+  
+    <li>Bare metal vs. VM</li>
+  
+  </ul>
+
+  
+  <p>
+    A fair comparison would be between a C-written programm using JNI and Go. Go would probably lose (ever so slightly) due to protocol and language overhead.
+  </p>
+  
+
+  
+  <p>
+    <b>Net profit</b>: Language maintainability, stability and semantics
+  </p>
+  
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Problems</h3>
+        
+  <ul>
+  
+    <li>`chmod +x` on SDCard (FAT!). Alternative: /data/local/tmp</li>
+  
+    <li>SELinux</li>
+  
+    <li>Opening sockets/Creating pipes</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Bottom line</h3>
+        
+  <ul>
+  
+    <li>Android is nice</li>
+  
+    <li>Management overhead outweighs benefits (IMHO)</li>
+  
+  </ul>
+
+  
+  <p>
+    <b>Future game changer</b>: Go team is working on making Go code callable from C.
+  </p>
+  
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Further reading</h3>
+        
+  
+  <p>
+    All about Go:
+  </p>
+  
+<p class="link"><a href="http://golang.org/" target="_blank">golang.org</a></p>
+  
+  <p>
+    Andrew Gerrand’s Chat Roulette talk
+  </p>
+  
+<p class="link"><a href="http://vimeo.com/53221560" target="_blank">Watch the talk on Vimeo</a></p>
+  
+  <p>
+    "Go Concurrency Patterns" by Rob Pike:
+  </p>
+  
+<p class="link"><a href="http://golang.org/s/concurrency-patterns" target="_blank">golang.org/s/concurrency-patterns</a></p>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Further visiting</h3>
+        
+  
+  <p>
+    GDG Berlin Golang
+  </p>
+  
+<p class="link"><a href="http://gplus.to/gdgberlingolang" target="_blank">gplus.to/gdgberlingolang</a></p>
+  
+  <p>
+    Next meetup TBD!
+  </p>
+  
+
+      
+      </article>
+  
+  
+
+      <article>
+        <h3>Thank you</h3>
+        
+          <div class="presenter">
+            
+  
+  <p>
+    Alexander Surma
+  </p>
+  
+
+  
+  <p>
+    Voxelbrain, GDG Berlin Golang
+  </p>
+  
+<p class="link"><a href="mailto:asu@voxelbrain.com" target="_blank"></a></p><p class="link"><a href="http://gplus.to/surmair" target="_blank"></a></p><p class="link"><a href="http://twitter.com/surmair" target="_blank">@surmair</a></p>
+          </div>
+        
+      </article>
+
+  
+  
+  <script src="./go_on_android_files/play.js"></script><script src="./go_on_android_files/socket.js" type="text/javascript"></script><script src="./go_on_android_files/play(1).js" type="text/javascript"></script>
+  
+
+<div class="slide-area" id="prev-slide-area"></div><div class="slide-area" id="next-slide-area"></div></section><link rel="stylesheet" type="text/css" href="./go_on_android_files/css"><link rel="stylesheet" type="text/css" href="./go_on_android_files/styles.css"><link rel="stylesheet" type="text/css" media="print" href="./go_on_android_files/print.css"></body></html>
