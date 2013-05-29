@@ -12,6 +12,72 @@
 }
   <slide>
     <hgroup>
+      <h2>GCE Facts</h2>
+    </hgroup>
+    <article>
+    <h3>History</h3>
+      <ul class="build">
+        <li>Announcement: I/O 2012</li>
+        <li>Closed beta: for Gold support (400$/month)</li>
+        <li>Public beta: I/O 2013</li>
+    </ul>
+    <h3>Technology</h3>
+    <ul class="build">
+        <li>KVM</li>
+        <li>RESTful API (Resource management)</li>
+        <li>UI uses same API</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>GCP Services</h2>
+    </hgroup>
+    <article>
+      <p>Google has commited to unify their cloud products under the
+      <a href="http://cloud.google.com">Google Cloud Platform</a> brand.</p>
+
+      <table>
+      	<tr>
+      		<th> GCP Name </th>
+      		<th> AWS equivalent </th>
+  		</tr>
+  		<tr>
+  			<td> Google App Engine </td>
+  			<td> Elastic Beanstalk </td>
+  		</tr>
+  		<tr>
+  			<td> Google Compute Engine </td>
+  			<td> EC2 </td>
+		</tr>
+		<tr>
+			<td> Cloud Storage </td>
+			<td> S3 </td>
+		</tr>
+		<tr>
+			<td> BigQuery </td>
+			<td> DynamoDB </td>
+		</tr>
+		<tr>
+			<td> Cloud SQL </td>
+			<td> RDS </td>
+		</tr>
+	</table>
+    </article>
+    <aside class="note">
+      <section>
+        <ul>
+          <li><b>Rough</b> equivalents</li>
+          <li>Beanstalk on top of EC2, AE stand-alone</li>
+          <li>Google’s Know-How of DBs vs Amazon’s</li>
+        </ul>
+      </section>
+    </aside>
+  </slide>
+  <!--
+  <slide>
+    <hgroup>
       <h2>Slide with Bullets</h2>
     </hgroup>
     <article>
@@ -341,4 +407,4 @@ function helloWorld(world) {
     <article>
       <iframe data-src="http://www.google.com/doodle4google/history.html"></iframe>
     </article>
-  </slide>
+  </slide> -->
