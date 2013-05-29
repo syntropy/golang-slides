@@ -30,6 +30,9 @@ URL: https://code.google.com/p/io-2012-slides
   		color: white;
   		border-bottom: none;
   	}
+  	slides > slide:not(.nobackground):before {
+  		content: attr(data-hashtag) !important;
+  	}
   </style>
 </head>
 <body style="opacity: 0">
@@ -84,6 +87,12 @@ URL: https://code.google.com/p/io-2012-slides
 </slides>
 
 
+<script>
+	var slides = document.querySelectorAll("slides > slide:not(.nobackground)");
+	for(var i in slides) {
+		slides[i].setAttribute('data-hashtag', {{.Hashtag}});
+	}
+</script>
 <script src='/play.js'></script>
 <!--[if IE]>
   <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
