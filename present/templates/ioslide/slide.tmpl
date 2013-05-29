@@ -21,6 +21,16 @@ URL: https://code.google.com/p/io-2012-slides
   <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="static/ioslide/theme/css/phone.css">
   <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
   <script data-main="static/ioslide/js/slides" src="static/ioslide/js/require-1.0.8.min.js"></script>
+  <style>
+  	.thank-you-slide article + p > span {
+  		display: inline-block;
+  		width: 115px;
+  	}
+  	.thank-you-slide article + p > a {
+  		color: white;
+  		border-bottom: none;
+  	}
+  </style>
 </head>
 <body style="opacity: 0">
 
@@ -52,13 +62,14 @@ URL: https://code.google.com/p/io-2012-slides
     <aside class="gdbar right"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
     <article class="flexbox vleft auto-fadein">
       <h2>&lt;Thank You!&gt;</h2>
+      <p>Questions?</p>
     </article>
-    <p class="auto-fadein">
-      {{with .Email}}<span>email</span><a href="mailto:{{.}}">{{.}}<br>{{end}}
-      {{with .GPlus}}<span>g+</span><a href="http://gplus.to/{{.}}">gplus.to/{{.}}</a><br>{{end}}
-      {{with .Twitter}}<span>twitter</span><a href="http://twitter.com/{{.}}">@{{.}}</a><br>{{end}}
-      {{with .Homepage}}<span>www</span><a href="{{.}}">{{.}}</a><br>{{end}}
-    </p>
+	    <p class="auto-fadein">
+	      {{with .Email}}<span>email</span><a href="mailto:{{.}}">{{.}}</a><br>{{end}}
+	      {{with .GPlus}}<span>g+</span><a href="http://gplus.to/{{.}}">gplus.to/{{.}}</a><br>{{end}}
+	      {{with .Twitter}}<span>twitter</span><a href="http://twitter.com/{{.}}">@{{.}}</a><br>{{end}}
+	      {{with .Homepage}}<span>www</span><a href="{{.}}">{{.}}</a><br>{{end}}
+	    </p>
   </slide>
 
 
