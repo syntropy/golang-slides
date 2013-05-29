@@ -1,0 +1,82 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="static/ioslide/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="static/ioslide/theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="static/ioslide/js/slides" src="static/ioslide/js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="logoslide nobackground">
+    <article class="flexbox vcenter">
+      <span><img src="static/ioslide/images/google_developers_logo.png"></span>
+    </article>
+  </slide>
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1>{{.Title}}</h1>
+      {{with .Subtitle}}<h2>{{.}}</h2>{{end}}
+      <p>
+      	{{.Author}}<br>
+      	{{.Work}}<br>
+      	{{.Date}}
+      </p>
+    </hgroup>
+  </slide>
+
+  {{.HTML}}
+
+  <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;Thank You!&gt;</h2>
+    </article>
+    <p class="auto-fadein">
+      {{with .Email}}<span>email</span><a href="mailto:{{.}}">{{.}}<br>{{end}}
+      {{with .GPlus}}<span>g+</span><a href="http://gplus.to/{{.}}">gplus.to/{{.}}</a><br>{{end}}
+      {{with .Twitter}}<span>twitter</span><a href="http://twitter.com/{{.}}">@{{.}}</a><br>{{end}}
+      {{with .Homepage}}<span>www</span><a href="{{.}}">{{.}}</a><br>{{end}}
+    </p>
+  </slide>
+
+
+  <slide class="logoslide dark nobackground">
+    <article class="flexbox vcenter">
+      <span><img src="static/ioslide/images/google_developers_logo_white.png"></span>
+    </article>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+
+<script src='/play.js'></script>
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
