@@ -90,7 +90,9 @@ URL: https://code.google.com/p/io-2012-slides
 <script>
 	var slides = document.querySelectorAll("slides > slide:not(.nobackground)");
 	for(var i in slides) {
-		slides[i].setAttribute('data-hashtag', {{.Hashtag}});
+		if(slides[i].setAttribute) {
+			slides[i].setAttribute('data-hashtag', {{.Hashtag}});
+		}
 	}
 </script>
 <script src='/play.js'></script>
