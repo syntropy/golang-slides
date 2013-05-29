@@ -1,0 +1,12 @@
+{
+	"title": "Title",
+	"subtitle": "Subtitle",
+	"date": "July 1st, 2013",
+	"hashtag": "#golang",
+	"author": "Alexander Surma",
+	"work": "voxelbrain, GDG Berlin Golang",
+	"email": "asu@voxelbrain.com",
+	"twitter": "@surmair",
+	"gplus": "surmair",
+	"homepage": "http://github.com/surmair"
+}
