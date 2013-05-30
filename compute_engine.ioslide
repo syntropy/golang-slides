@@ -101,6 +101,7 @@
 	<aside class="note">
 		<section>
 			<ul>
+				<li>Well-intended, pretty bad (useless) comparison</li>
 				<li>EC2 = 1.0-1.2 GHz 2007 Opteron</li>
 				<li>GCE billing: first 10 min, then per minute</li>
 				<li>EC2 billing: per hour</li>
@@ -168,6 +169,13 @@
 		<img src="imgs/ec2-screenshot.png" alt="Screenshot of the EC2 UI" title="Screenshot of the EC2 UI" width="90%" class="reflect">
 		<footer class="source">Screenshot of the EC2 UI</footer>
 	</article>
+	<aside class="note">
+		<section>
+			<ul>
+				<li>Monitoring and Billing</li>
+			</ul>
+		</section>
+	</aside>
 </slide>
 <slide>
 	<hgroup>
@@ -189,45 +197,144 @@
 <slide>
 	<hgroup>
 		<h2>Features</h2>
-		<h3>Instance Configuration</h3>
+		<h3>Snapshots</h3>
 	</hgroup>
 	<article>
-		<ul class="build">
-			<li>Tags</li>
-			<li>Metadata Key-Value</li>
-			<li>Zone</li>
-			<li>Type</li>
-			<li>Boot Source</li>
-			<li>Additional Disks</li>
-			<li>Static/Ephemeral IP</li>
-			<li>Firewall Configuration</li>
-			<li>API Access Privileges</li>
+		<ul>
+			<li>Created from disk image</li>
+			<li>Available <b>globally</b></li>
 		</ul>
 	</article>
+	<aside class="note">
+		<section>
+			<ul>
+				<li>Build once, deploy anywhere</li>
+				<li>Configuration: Metadata</li>
+			</ul>
+		</section>
+	</aside>
 </slide>
 <slide>
 	<hgroup>
 		<h2>Features</h2>
 		<h3>Metadata</h3>
 	</hgroup>
-	<article>
-		<ul class="build">
-			<li>Snapshots of a disk</li>
+	<article class="smaller">
+		<p>
+			Powerful and simple mechanism to inject data (credentials, configuration, ressources etc.) into the machine’s userland.
 
-		</ul>
+			<ul>
+				<li>Key-Value</li>
+				<li>Per-Project and Per-Instance</li>
+				<li>HTTP-Endpoint for JSON-formatted retrieval</li>
+			</ul>
+		</p>
+		<pre class="prettyprint" data-lang="bash">
+TOKEN=$(curl <b>http://metadata/computeMetadata/v1beta1/project/attributes/dnsimpleToken</b>)
+ID=$(curl <b>http://metadata/computeMetadata/v1beta1/instance/attributes/dnsimpleEntryId</b>)
+IP=$(curl <b>http://metadata/.../instance/network-interfaces/0/access-configs/0/external-ip</b>)
+curl \
+  -H 'X-DNSimple-Domain-Token: '$TOKEN \
+  -X PUT \
+  -d '{
+    "record": {"name": "workstation", "content": "'$IP'"}
+  }' \
+  https://dnsimple.com/domains/haxigon.com/records/$ID </pre>
+	<p>Example usage: <code>sshKeys</code> is automatically injected into <code>authorized_keys</code></p>
 	</article>
+	<aside class="note">
+		<section>
+			<ul>
+				<li>Own data, Google’s data</li>
+				<li>Sample: Pointing a DNS record to the machine</li>
+				<li>I/O Talk: Injecting Go Code(!)</li>
+				<li>Machines could even set their own metadata using the GCE API</li>
+			</ul>
+		</section>
+	</aside>
 </slide>
 <slide>
 	<hgroup>
 		<h2>Features</h2>
-		<h3>Snapshots</h3>
+		<h3>Service Accounts</h3>
 	</hgroup>
 	<article>
-		<ul class="build">
-			<li>Snapshots of a disk</li>
-
+		<p>
+			Service accounts are bogus users which have completed
+			the OAuth flow and have been given the permissions of your choice.
+		</p>
+		<div class="centered">
+			<img src="imgs/gce-serviceacc.png" class="reflect">
+		</div>
+	</article>
+	<aside class="note">
+		<section>
+			<ul>
+				<li>Permissions are granted during instance creation</li>
+				<li><b>Great</b> synergy with App Engine apps working on CS, BQ & TQ</li>
+			</ul>
+		</section>
+	</aside>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Features</h2>
+		<h3>Service Accounts (cont'd)</h3>
+	</hgroup>
+	<article class="smaller">
+		<pre class="prettyprint" data-lang="bash">
+curl http://metadata/computeMetadata/v1beta1/instance/service-accounts/default/token
+{
+  "access_token": "<b>ya29.AHES6ZQYuCmaO_zInBy8xQgYpx-MVFbToxUy1_lmY5cfmg</b>",
+  "expires_in": 3599,
+  "token_type": "Bearer"
+} </pre>
+		<pre class="prettyprint" data-lang="bash">
+curl \
+  -H '<b>Authorization: Bearer ya29.AHES6ZQYuCmaO_zInBy8xQgYpx-MVFbToxUy1_lmY5cfmg</b>' \
+  https://www.googleapis.com/compute/v1beta15/projects/surma-workstation/zones/europe-west1-a/instances
+{
+ "id": "projects/surma-workstation/zones/europe-west1-a/instances",
+ "items": [
+  {
+   "status": "RUNNING",
+   "name": "workstation",
+   "id": "2674708656722824331",
+   "creationTimestamp": "2013-05-30T02:47:11.861-07:00",
+... </pre>
+	</article>
+	<aside class="note">
+		<section>
+			<ul>
+				<li>Token is valid for 1 hour</li>
+				<li>5 Minutes before expiration, metadata holds a new token</li>
+			</ul>
+		</section>
+	</aside>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Features</h2>
+		<h3>Networking</h3>
+	</hgroup>
+	<article>
+		<ul>
+			<li>1 private network<br>
+				Multiple private networks can be created and instances can be
+				assigned to one of them. </li>
+			<li>1 external IP (static/ephemeral)<br>
+				External IPs have a fee when not in use.</li>
+			<li>Configurable firewall</li>
 		</ul>
 	</article>
+	<aside class="note">
+		<section>
+			<ul>
+				<li>1 NIC per instance</li>
+				<li>Certain topologies don't seem possible (e.g. DMZ)</li>
+			</ul>
+		</section>
+	</aside>
 </slide>
 <slide class="segue dark nobackground">
 	<aside class="gdbar"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
@@ -235,6 +342,87 @@
 		<h2>Google Compute Engine</h2>
 		<h3>“The Painful Stuff™”</h3>
 	</hgroup>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Pain Points</h2>
+		<h3>Images</h3>
+	</hgroup>
+	<article>
+		<p>
+			Currently, there’s no Ubuntu, the de-facto standard. There used to be,
+			but the images are shown as deleted. There’s Debian 6, Debian 7 and CentOS.
+		</p>
+		<p class="centered">
+			<img src="imgs/gce-ubuntu.png" class="reflect" />
+		</p>
+		<ul>
+			<li>No possibility of community images or shared snapshots</li>
+			<li>No PPAs</li>
+		</ul>
+	</article>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Pain Points</h2>
+		<h3>Shutdown & SSH Keys</h3>
+	</hgroup>
+	<article>
+		<p>
+			A reboot is reboot. A shutdown is a “Now go hang in VM limbo”. There
+			are no powered-off instances, you have to destroy them (using the API)
+			to stop billing.
+		</p>
+		<p>
+			On every reboot the SSH Host key is regenerated giving you:
+			<pre>
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</pre>
+			I patched my image.
+		</p>
+	</article>
+	<aside class="note">
+		<section>
+			<ul>
+				<li>I'm not convinced this is actually correct.</li>
+			</ul>
+		</section>
+	</aside>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Pain Points</h2>
+		<h3>Delegation</h3>
+	</hgroup>
+	<article>
+		<p>
+			There doesn't seem to be a way to give other users administrative
+			access to a machine or project.
+		</p>
+	</article>
+	<aside class="note">
+		<section>
+			<ul>
+				<li>Write an OAuth app?</li>
+			</ul>
+		</section>
+	</aside>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Pain Points</h2>
+		<h3>Load Balancing</h3>
+	</hgroup>
+	<article>
+		<p>
+			There's no off-the-shelf load-balancing.
+		</p>
+		<p>
+			Yet! The <a href="https://www.youtube.com/watch?v=64YQd_UocjM">session at Google I/O</a>
+			shows a loadbalancing feature which is supposed to be shipped within a few months.
+		</p>
+	</article>
 </slide>
 <slide class="segue dark nobackground">
 	<aside class="gdbar"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
@@ -245,12 +433,23 @@
 </slide>
 <slide>
 	<hgroup>
+		<h2>What didn’t I talk about?</h2>
+	</hgroup>
+	<article>
+		<ul>
+			<li>Command-line utility: <code>gcutil</Code></li>
+		</ul>
+	</article>
+</slide>
+<slide>
+	<hgroup>
 		<h2>Links & Sources</h2>
 	</hgroup>
 	<article>
 		<ul>
 			<li><a href="https://cloud.google.com/pricing/compute-engine">GCE Pricing</a></li>
 			<li><a href="http://www.ec2instances.info/">ec2instances.info</a> – <em>Comprehensive</em> list of EC2 instance types with pricing and specs (because Amazon can’t be bothered to give a proper one themselves)</li>
+			<li><a href="https://www.youtube.com/watch?v=64YQd_UocjM">Google I/O 2013 talk</a> on GCP (<a href="https://www.youtube.com/watch?v=64YQd_UocjM&t=24m57s">Jump to demo part</a>)</li>
 		</ul>
 	</article>
 </slide>
