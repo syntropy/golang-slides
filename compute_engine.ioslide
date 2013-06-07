@@ -179,13 +179,36 @@
 </slide>
 <slide>
 	<hgroup>
-		<h2>UI</h2>
-		<h3>EC2</h3>
+		<h2>Networking</h2>
 	</hgroup>
 	<article class="flexbox centered">
 		<img src="imgs/gce-screenshot.png" alt="Screenshot of the GCE UI" title="Screenshot of the GCE UI" width="	90%" class="reflect">
 		<footer class="source">Screenshot of the GCE UI</footer>
 	</article>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Features</h2>
+		<h3>Networking</h3>
+	</hgroup>
+	<article>
+		<ul>
+			<li>1 private network<br>
+				Multiple private networks can be created and instances can be
+				assigned to one of them. </li>
+			<li>1 external IP (static/ephemeral)<br>
+				External IPs have a fee when not in use.</li>
+			<li>Configurable firewall</li>
+		</ul>
+	</article>
+	<aside class="note">
+		<section>
+			<ul>
+				<li>1 NIC per instance</li>
+				<li>Certain topologies don't seem possible (e.g. DMZ)</li>
+			</ul>
+		</section>
+	</aside>
 </slide>
 <slide class="segue dark nobackground">
 	<aside class="gdbar"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
@@ -226,7 +249,7 @@
 			<ul>
 				<li>Key-Value</li>
 				<li>Per-Project and Per-Instance</li>
-				<li>HTTP-Endpoint for JSON-formatted retrieval</li>
+				<li>HTTP-Endpoint for retrieval</li>
 			</ul>
 		</p>
 		<pre class="prettyprint" data-lang="bash">
@@ -312,30 +335,6 @@ curl \
 		</section>
 	</aside>
 </slide>
-<slide>
-	<hgroup>
-		<h2>Features</h2>
-		<h3>Networking</h3>
-	</hgroup>
-	<article>
-		<ul>
-			<li>1 private network<br>
-				Multiple private networks can be created and instances can be
-				assigned to one of them. </li>
-			<li>1 external IP (static/ephemeral)<br>
-				External IPs have a fee when not in use.</li>
-			<li>Configurable firewall</li>
-		</ul>
-	</article>
-	<aside class="note">
-		<section>
-			<ul>
-				<li>1 NIC per instance</li>
-				<li>Certain topologies don't seem possible (e.g. DMZ)</li>
-			</ul>
-		</section>
-	</aside>
-</slide>
 <slide class="segue dark nobackground">
 	<aside class="gdbar"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
 	<hgroup class="auto-fadein">
@@ -350,15 +349,16 @@ curl \
 	</hgroup>
 	<article>
 		<p>
-			Currently, there’s no Ubuntu, the de-facto standard. There used to be,
-			but the images are shown as deleted. There’s Debian 6, Debian 7 and CentOS.
+			Currently, there’s no Ubuntu, which I consider the de-facto standard for
+			servers. There used to be, but the images are shown as deleted.
+			There’s Debian 6, Debian 7 and CentOS.
 		</p>
 		<p class="centered">
 			<img src="imgs/gce-ubuntu.png" class="reflect" />
 		</p>
 		<ul>
-			<li>No possibility of community images or shared snapshots</li>
 			<li>No PPAs</li>
+			<li>No possibility of community images or shared snapshots</li>
 		</ul>
 	</article>
 </slide>
@@ -450,6 +450,7 @@ curl \
 			<li><a href="https://cloud.google.com/pricing/compute-engine">GCE Pricing</a></li>
 			<li><a href="http://www.ec2instances.info/">ec2instances.info</a> – <em>Comprehensive</em> list of EC2 instance types with pricing and specs (because Amazon can’t be bothered to give a proper one themselves)</li>
 			<li><a href="https://www.youtube.com/watch?v=64YQd_UocjM">Google I/O 2013 talk</a> on GCP (<a href="https://www.youtube.com/watch?v=64YQd_UocjM&t=24m57s">Jump to demo part</a>)</li>
+			<li><a href="http://gplus.to/gdgberlingolang">GDG Berlin Golang</a> – http://gplus.to/gdgberlingolang</li>
 		</ul>
 	</article>
 </slide>
