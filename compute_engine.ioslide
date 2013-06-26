@@ -184,6 +184,14 @@
 	<article class="flexbox centered">
 		<img src="imgs/gce-screenshot.png" alt="Screenshot of the GCE UI" title="Screenshot of the GCE UI" width="	90%" class="reflect">
 		<footer class="source">Screenshot of the GCE UI</footer>
+		<aside class="note">
+			<section>
+				<ul>
+					<li>Uses official API</li>
+					<li>Every operation can be inspected in API call form</li>
+				</ul>
+			</section>
+		</aside>
 	</article>
 </slide>
 <slide>
@@ -349,8 +357,7 @@ curl \
 	</hgroup>
 	<article>
 		<p>
-			Currently, there’s no Ubuntu, which I consider the de-facto standard for
-			servers. There used to be, but the images are shown as deleted.
+			Currently, there’s no Ubuntu. There used to be, but the images are shown as deleted.
 			There’s Debian 6, Debian 7 and CentOS.
 		</p>
 		<p class="centered">
