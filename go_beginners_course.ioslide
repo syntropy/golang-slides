@@ -1,0 +1,184 @@
+{
+	"title": "Go Beginner’s Course",
+	"subtitle": "for the fast and the furious",
+	"hashtag": "#golang",
+	"author": "Alexander “surma” Surma",
+	"work": "voxelbrain, GDG Berlin Golang",
+	"email": "asu@voxelbrain.com",
+	"twitter": "surmair",
+	"gplus": "surmair",
+	"homepage": "http://github.com/surma"
+}
+<slide>
+	<hgroup>
+		<h2>Too fast?</h2>
+		<h3>…it’s stolen, anyways.</h3>
+	</hgroup>
+	<article>
+		<p>
+			This introduction is heavily based on
+			<ul>
+				<li><a href="http://learnxinyminutes.com/docs/go/">Learn X in Y minutes, where X=Go</a> by <a href="https://github.com/soniakeys">Sonia Keys</a></li>
+				<li><a href="https://gobyexample.com/">Go by Example</a> by <a href="https://github.com/mmcgrana">Mark McGranaghan</a></li>
+			</ul>
+		</p>
+		<p>
+			If you ever lose track or want to look something up go there. You
+			can find these slides at <a href="http://slides.surmair.de">slides.surmair.de</a>.
+		</p>
+	</article>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Requirements</h2>
+	</hgroup>
+	<article>
+		<p>
+			During introduction:
+			<ul>
+				<li>Programming experience</li>
+				<li>Optional: <a href="http://play.golang.org">play.golang.org</a></li>
+			</ul>
+		</p>
+		<p>
+			During workshop:
+			<ul>
+				<li>Modern browser</li>
+				<li>Editor</li>
+				<li>Command-Line with <a href="http://github.com/voxelbrain/pixelpixel">picli</a></li>
+			</ul>
+		</p>
+	</article>
+</slide>
+<slide class="segue dark nobackground">
+	<aside class="gdbar"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
+	<hgroup class="auto-fadein">
+		<h2>Ready?</h2>
+		<h3>… go</h3>
+	</hgroup>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Syntax speedrun</h2>
+	</hgroup>
+	<article>
+		<pre class="prettyprint" data-lang="go">
+// Single line comment
+/* Multi-
+   line comment */
+		</pre>
+	</article>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Syntax speedrun</h2>
+	</hgroup>
+	<article>
+		<pre class="prettyprint" data-lang="go">
+// A package clause starts every source file.
+// Main is a special name declaring an executable rather than a library.
+package main
+		</pre>
+	</article>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Syntax speedrun</h2>
+	</hgroup>
+	<article>
+		<pre class="prettyprint" data-lang="go">
+package main
+
+// Import declaration declares library packages referenced in this file.
+import (
+    "fmt"      // A package in the Go standard library
+    "net/http" // Yes, a web server!
+    "strconv"  // String conversions
+)
+		</pre>
+	</article>
+	<aside class="note">
+		<section>
+			Yes, Go will punch you, if you have unused imports. Get used to it.
+		</section>
+	</aside>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Syntax speedrun</h2>
+	</hgroup>
+	<article>
+		<pre class="prettyprint" data-lang="go">
+package main
+
+import (
+    "fmt"
+)
+
+// A function definition.  Main is special.  It is the entry point for the
+// executable program.  Love it or hate it, Go uses brace brackets.
+func main() {
+    // Println outputs a line to stdout.
+    fmt.Println("Hello world!")
+
+    // Call another function within this package.
+    beyondHello()
+}
+
+		</pre>
+	</article>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Syntax speedrun</h2>
+	</hgroup>
+	<article>
+		<pre class="prettyprint" data-lang="go">
+// Functions have parameters in parentheses.
+// If there are no parameters, empty parentheses are still required.
+func beyondHello() {
+    var x int // Variable declaration.  Variables must be declared before use.
+    x = 3     // Variable assignment.
+    // "Short" declarations use := to infer the type, declare, and assign.
+    y := 4
+    sum, prod := learnMultiple(x, y)        // function returns two values
+    fmt.Println("sum:", sum, "prod:", prod)
+    learnTypes()
+}
+
+// Functions can have parameters and (multiple!) return values.
+func learnMultiple(x, y int) (sum, prod int) {
+    return x + y, x * y // return two values
+}
+		</pre>
+	</article>
+</slide>
+<slide>
+	<hgroup>
+		<h2>Syntax speedrun</h2>
+	</hgroup>
+	<article class="smaller">
+		<pre class="prettyprint" data-lang="go">
+func learnTypes() {
+    f := 3.14195 // float64, an IEEE-754 64-bit floating point number
+    c := 3 + 4i  // complex128, represented internally with two float64s
+
+    // Arrays have size fixed at compile time.
+    var a4 [4]int           // an array of 4 ints, initialized to all 0
+    a3 := [...]int{3, 1, 5} // an array of 3 ints, initialized as shown
+
+    // Slices have dynamic size.  Arrays and slices each have advantages
+    // but use cases for slices are much more common.
+    s3 := []int{4, 5, 9}    // compare to a3.  no ellipsis here
+    s4 := make([]int, 4)    // allocates slice of 4 ints, initialized to all 0
+    bs := []byte("a slice") // type conversion syntax
+
+    // Maps are a dynamically growable associative array type, like the
+    // hash or dictionary types of some other languages.
+    m := map[string]int{"three": 3, "four": 4}
+
+    learnFlowControl()
+}
+		</pre>
+	</article>
+</slide>
