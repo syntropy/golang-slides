@@ -1,92 +1,92 @@
 {
-	"title": "Go Beginner’s Course",
-	"subtitle": "for the fast and the furious",
-	"hashtag": "#golang",
-	"author": "Alexander “surma” Surma",
-	"work": "voxelbrain, GDG Berlin Golang",
-	"email": "asu@voxelbrain.com",
-	"twitter": "surmair",
-	"gplus": "surmair",
-	"homepage": "http://github.com/surma"
+    "title": "Go Beginner’s Course",
+    "subtitle": "Rapid Fire",
+    "hashtag": "#golang",
+    "author": "Alexander “surma” Surma",
+    "work": "voxelbrain, GDG Berlin Golang",
+    "email": "asu@voxelbrain.com",
+    "twitter": "surmair",
+    "gplus": "surmair",
+    "homepage": "http://github.com/surma"
 }
 <slide>
-	<hgroup>
-		<h2>Too fast?</h2>
-		<h3>…it’s stolen, anyways.</h3>
-	</hgroup>
-	<article>
-		<p>
-			This introduction is heavily based on
-			<ul>
-				<li><a href="http://learnxinyminutes.com/docs/go/">Learn X in Y minutes, where X=Go</a> by <a href="https://github.com/soniakeys">Sonia Keys</a></li>
-				<li><a href="https://gobyexample.com/">Go by Example</a> by <a href="https://github.com/mmcgrana">Mark McGranaghan</a></li>
-			</ul>
-		</p>
-		<p>
-			If you ever lose track or want to look something up go there. You
-			can find these slides at <a href="http://slides.surmair.de">slides.surmair.de</a>.
-		</p>
-	</article>
+    <hgroup>
+        <h2>Too fast?</h2>
+        <h3>…it’s stolen, anyways.</h3>
+    </hgroup>
+    <article>
+        <p>
+            This introduction is heavily based on
+            <ul>
+                <li><a href="http://learnxinyminutes.com/docs/go/">Learn X in Y minutes, where X=Go</a> by <a href="https://github.com/soniakeys">Sonia Keys</a></li>
+                <li><a href="https://gobyexample.com/">Go by Example</a> by <a href="https://github.com/mmcgrana">Mark McGranaghan</a></li>
+            </ul>
+        </p>
+        <p>
+            If you ever lose track or want to look something up go to these sites. You
+            can also find these slides at <a href="http://slides.surmair.de">slides.surmair.de</a>.
+        </p>
+    </article>
 </slide>
 <slide>
-	<hgroup>
-		<h2>Requirements</h2>
-	</hgroup>
-	<article>
-		<p>
-			During introduction:
-			<ul>
-				<li>Programming experience</li>
-				<li>Optional: <a href="http://play.golang.org">play.golang.org</a></li>
-			</ul>
-		</p>
-		<p>
-			During workshop:
-			<ul>
-				<li>Modern browser</li>
-				<li>Editor</li>
-				<li>Command-Line with <a href="http://github.com/voxelbrain/pixelpixel">picli</a></li>
-			</ul>
-		</p>
-	</article>
+    <hgroup>
+        <h2>Requirements</h2>
+    </hgroup>
+    <article>
+        <p>
+            During introduction:
+            <ul>
+                <li>Programming experience</li>
+                <li>Optional: <a href="http://play.golang.org">play.golang.org</a></li>
+            </ul>
+        </p>
+        <p>
+            During workshop:
+            <ul>
+                <li>Modern browser</li>
+                <li>Editor</li>
+                <li>Command-Line with <a href="http://github.com/voxelbrain/pixelpixel">picli</a></li>
+            </ul>
+        </p>
+    </article>
 </slide>
 <slide class="segue dark nobackground">
-	<aside class="gdbar"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
-	<hgroup class="auto-fadein">
-		<h2>Ready?</h2>
-		<h3>… go</h3>
-	</hgroup>
+    <aside class="gdbar"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
+    <hgroup class="auto-fadein">
+        <h2>Ready?</h2>
+        <h3>… go</h3>
+    </hgroup>
 </slide>
 <slide>
-	<hgroup>
-		<h2>Syntax speedrun</h2>
-	</hgroup>
-	<article>
-		<pre class="prettyprint" data-lang="go">
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
 // Single line comment
 /* Multi-
    line comment */
-		</pre>
-	</article>
+        </pre>
+    </article>
 </slide>
 <slide>
-	<hgroup>
-		<h2>Syntax speedrun</h2>
-	</hgroup>
-	<article>
-		<pre class="prettyprint" data-lang="go">
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
 // A package clause starts every source file.
 // Main is a special name declaring an executable rather than a library.
 package main
-		</pre>
-	</article>
+        </pre>
+    </article>
 </slide>
 <slide>
-	<hgroup>
-		<h2>Syntax speedrun</h2>
-	</hgroup>
-	<article>
-		<pre class="prettyprint" data-lang="go">
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
 package main
 
 // Import declaration declares library packages referenced in this file.
@@ -95,20 +95,20 @@ import (
     "net/http" // Yes, a web server!
     "strconv"  // String conversions
 )
-		</pre>
-	</article>
-	<aside class="note">
-		<section>
-			Yes, Go will punch you, if you have unused imports. Get used to it.
-		</section>
-	</aside>
+        </pre>
+    </article>
+    <aside class="note">
+        <section>
+            Yes, Go will punch you, if you have unused imports. Get used to it.
+        </section>
+    </aside>
 </slide>
 <slide>
-	<hgroup>
-		<h2>Syntax speedrun</h2>
-	</hgroup>
-	<article>
-		<pre class="prettyprint" data-lang="go">
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
 package main
 
 import (
@@ -125,21 +125,29 @@ func main() {
     beyondHello()
 }
 
-		</pre>
-	</article>
+        </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>UTF8</li>
+                <li>No semicoli</li>
+            </ul>
+        </section>
+    </aside>
 </slide>
 <slide>
-	<hgroup>
-		<h2>Syntax speedrun</h2>
-	</hgroup>
-	<article>
-		<pre class="prettyprint" data-lang="go">
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
 // Functions have parameters in parentheses.
 // If there are no parameters, empty parentheses are still required.
 func beyondHello() {
     var x int // Variable declaration.  Variables must be declared before use.
     x = 3     // Variable assignment.
-    // "Short" declarations use := to infer the type, declare, and assign.
+    // “Short” declarations use := to infer the type, declare, and assign.
     y := 4
     sum, prod := learnMultiple(x, y)        // function returns two values
     fmt.Println("sum:", sum, "prod:", prod)
@@ -150,15 +158,24 @@ func beyondHello() {
 func learnMultiple(x, y int) (sum, prod int) {
     return x + y, x * y // return two values
 }
-		</pre>
-	</article>
+        </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>Inference</li>
+                <li><code>printf</code></li>
+                <li>Type signature backwards? Think about typedefs.</li>
+            </ul>
+        </section>
+    </aside>
 </slide>
 <slide>
-	<hgroup>
-		<h2>Syntax speedrun</h2>
-	</hgroup>
-	<article class="smaller">
-		<pre class="prettyprint" data-lang="go">
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article class="smaller">
+        <pre class="prettyprint" data-lang="go">
 func learnTypes() {
     f := 3.14195 // float64, an IEEE-754 64-bit floating point number
     c := 3 + 4i  // complex128, represented internally with two float64s
@@ -177,8 +194,345 @@ func learnTypes() {
     // hash or dictionary types of some other languages.
     m := map[string]int{"three": 3, "four": 4}
 
+    // …
+}
+        </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>Zero-Value</li>
+                <li><code>make</code> is magic</li>
+                <li>This won’t compile, unused variables</li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+func learnTypes() {
+    // …
+
+    // Unused variables are an error in Go.
+    // The underbar lets you “use” a variable but discard its value.
+    _, _, _, _, _, _, _, _, _ = s2, g, f, u, pi, n, a3, s4, bs
+
+    learnMemory()
+}
+        </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>Annoying? Only when prototyping.</li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+func learnMemory() {
+    p, q := useMemory() // declares p, q to be type pointer to int.
+    fmt.Println(*p, *q) // * follows a pointer.  This prints two ints.
+
     learnFlowControl()
 }
-		</pre>
-	</article>
+
+// Go is fully garbage collected.  It has pointers but no pointer arithmetic.
+// You can make a mistake with a nil pointer, but not by incrementing a pointer.
+func useMemory() (*int, *int) {
+    s := make([]int, 20) // allocate 20 ints as a single block of memory
+    s[3] = 7             // assign one of them
+    r := -2              // declare another local variable
+    return &s[3], &r     // & takes the address of an object.
+}
+        </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>Compiler proves, if allocation is safe on stack</li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+func learnFlowControl() {
+    // If statements require brace brackets, and do not require parens.
+    // Formatting is standardized by the command line command “go fmt.”
+    if false {
+        // pout
+    } else {
+        // gloat
+    }
+
+    // …
+}
+        </pre>
+    </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+func learnFlowControl() {
+    // …
+    // Use switch in preference to chained if statements.
+    x := 1
+    switch x {
+    case 0:
+    case 1:
+        // cases don't “fall through”
+    case 2:
+        // unreached
+    }
+    // …
+}
+        </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>Explicit fallthrough</li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+func learnFlowControl() {
+    // …
+    // Like if, for doesn't use parens either.
+    for x := 0; x < 3; x++ { // ++ is a statement
+        fmt.Println("iteration", x)
+    }
+
+    // For is the only loop statement in Go, but it has alternate forms.
+    for { // infinite loop
+        break    // just kidding
+        continue // unreached
+    }
+    // …
+}
+        </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li><code>x++</code> is a statement</li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+func learnFlowControl() {
+    // …
+    // As with for, := in an if statement means to declare and assign y first,
+    // then test y > x.
+    if y := expensiveComputation(); y > x {
+        x = y
+    }
+
+    // …
+}
+        </pre>
+    </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+func learnFlowControl() {
+    // …
+    // Function literals are closures.
+    xBig := func() bool {
+        return x > 100 // references x declared above switch statement.
+    }
+    x = 1e6
+    fmt.Println("xBig:", xBig()) // true
+    x /= 1e5                     // this makes x == 10
+    fmt.Println("xBig:", xBig()) // false now
+
+    learnInterfaces()
+}
+        </pre>
+    </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+// Define Stringer as an interface type with one method, String.
+type Stringer interface {
+    String() string
+}
+        </pre>
+    </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+// Define pair as a struct with two fields, ints named x and y.
+type pair struct {
+    x, y int
+}
+
+// Define a method on type pair.  Pair now implements Stringer.
+func (p pair) String() string { // p is called the “receiver”
+    // Sprintf is another public function in package fmt.
+    // Dot syntax references fields of p.
+    return fmt.Sprintf("(%d, %d)", p.x, p.y)
+}
+        </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>There’s no <code>-&gt;</code> notation</li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+func learnInterfaces() {
+    // Brace syntax is a “struct literal.”  It evaluates to an initialized
+    // struct.  The := syntax declares and initializes p to this struct.
+    p := pair{3, 4}
+    fmt.Println(p.String()) // call String method of p, of type pair.
+    var i Stringer          // declare i of interface type Stringer.
+    i = p                   // valid because pair implements Stringer
+    fmt.Println(i.String())
+
+    // Functions in the fmt package call the String method to ask an object
+    // for a printable representation of itself.
+    fmt.Println(p) // output same as above. Println calls String method.
+    fmt.Println(i) // output same as above
+
+    learnErrorHandling()
+}
+        </pre>
+    </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="go">
+func learnErrorHandling() {
+    // “, ok” idiom used to tell if something worked or not.
+    m := map[int]string{3: "three", 4: "four"}
+    if x, ok := m[1]; !ok { // ok will be false because 1 is not in the map.
+        fmt.Println("no one there")
+    } else {
+        fmt.Print(x) // x would be the value, if it were in the map.
+    }
+    // An error value communicates not just “ok” but more about the problem.
+    if _, err := strconv.Atoi("non-int"); err != nil { // _ discards value
+        // prints “strconv.ParseInt: parsing "non-int": invalid syntax”
+        fmt.Println(err)
+    }
+    learnConcurrency()
+}
+
+        </pre>
+    </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article class="smaller">
+        <pre class="prettyprint" data-lang="go">
+// c is a channel, a concurrency-safe communication object.
+func inc(i int, c chan int) {
+    c <- i + 1 // <- is the "send" operator when a channel appears on the left.
+}
+
+func learnConcurrency() {
+    // Same make function used earlier to make a slice.  Make allocates and
+    // initializes slices, maps, and channels.
+    c := make(chan int)
+    // Start three concurrent goroutines.  Numbers will be incremented
+    // concurrently, perhaps in parallel if the machine is capable and
+    // properly configured.  All three send to the same channel.
+    go inc(0, c) // go is a statement that starts a new goroutine.
+    go inc(10, c)
+    go inc(-805, c)
+    // Read three results from the channel and print them out.
+    // There is no telling in what order the results will arrive!
+    fmt.Println(<-c, <-c, <-c) // channel on right, <- is "receive" operator.
+
+    learnMoreConcurrency()
+}
+        </pre>
+    </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Syntax speedrun</h2>
+    </hgroup>
+    <article class="smaller">
+        <pre class="prettyprint" data-lang="go">
+func learnMoreConcurrency() {
+    c, cs, cc := make(chan int), make(chan string), make(chan chan string)
+    go func() { c <- 84 }()       // start a new goroutine just to send a value
+    go func() { cs <- "wordy" }() // again, for cs this time
+    // Select selects a case at random out of the cases
+    // that are ready to communicate.
+    select {
+    case i := <-c: // the value received can be assigned to a variable
+        fmt.Printf("it's a %T", i)
+    case <-cs: // or the value received can be discarded
+        fmt.Println("it's a string")
+    case <-cc: // usused channel, not ready for communication.
+        fmt.Println("didn't happen.")
+    }
+    // At this point, one of the two goroutines started above has completed,
+    // the other will remain blocked.
+}
+        </pre>
+    </article>
+</slide>
+<slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
+    <hgroup class="auto-fadein">
+        <h2>pixel²</h2>
+    </hgroup>
 </slide>
