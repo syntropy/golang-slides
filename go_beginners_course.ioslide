@@ -3,8 +3,8 @@
     "subtitle": "Rapid Fire",
     "hashtag": "#golang",
     "author": "Alexander “surma” Surma",
-    "work": "voxelbrain, GDG Berlin Golang",
-    "email": "asu@voxelbrain.com",
+    "work": "nuboLAB, GDG Berlin Golang, OpenTechSchool",
+    "email": "surma@opentechschool.org",
     "twitter": "surmair",
     "gplus": "surmair",
     "homepage": "http://github.com/surma"
@@ -23,8 +23,8 @@
             </ul>
         </p>
         <p>
-            If you ever lose track or want to look something up go to these sites. You
-            can also find these slides at <a href="http://slides.surmair.de">slides.surmair.de</a>.
+            If you ever lose track or want to look something up — go to these sites. You
+            can also find this presentation at <a href="http://slides.surmair.de">slides.surmair.de</a>.
         </p>
     </article>
 </slide>
@@ -75,8 +75,9 @@
     </hgroup>
     <article>
         <pre class="prettyprint" data-lang="go">
-// A package clause starts every source file.
-// Main is a special name declaring an executable rather than a library.
+// A “package” clause starts every source file.
+// “main” is a special package name declaring an executable
+// rather than a library.
 package main
         </pre>
     </article>
@@ -99,7 +100,7 @@ import (
     </article>
     <aside class="note">
         <section>
-            Yes, Go will punch you, if you have unused imports. Get used to it.
+            Yes, Go will punch you if you have unused imports. Get used to it.
         </section>
     </aside>
 </slide>
@@ -163,6 +164,7 @@ func learnMultiple(x, y int) (sum, prod int) {
     <aside class="note">
         <section>
             <ul>
+                <li>“Before use” vs. “Head of function”</li>
                 <li>Inference</li>
                 <li><code>printf</code></li>
                 <li>Type signature backwards? Think about typedefs.</li>
@@ -372,7 +374,7 @@ func learnFlowControl() {
     // …
     // Function literals are closures.
     xBig := func() bool {
-        return x > 100 // references x declared above switch statement.
+        return x > 100 // references x declared in above switch statement.
     }
     x = 1e6
     fmt.Println("xBig:", xBig()) // true
@@ -503,6 +505,13 @@ func learnConcurrency() {
 }
         </pre>
     </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>Channels preserve order, but no telling which goroutine runs first.</li>
+            </ul>
+        </section>
+    </aside>
 </slide>
 <slide>
     <hgroup>
@@ -535,4 +544,66 @@ func learnMoreConcurrency() {
     <hgroup class="auto-fadein">
         <h2>pixel²</h2>
     </hgroup>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Pixelpixel</h2>
+    </hgroup>
+    <article class="smaller">
+        <img src="imgs/gonoob-pp.png" class="reflect">
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>A pixel made of pixels (256px × 256px)</li>
+                <li>Drawable and clickable, each backed by a Go program</li>
+                <li>Everyone gets a pixel for her-/himself</li>
+                <li>Everyone can open this page</li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Pixelpixel</h2>
+    </hgroup>
+    <article class="smaller">
+        <img src="imgs/gonoob-pplogs.png" class="reflect">
+    </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Pixelpixel</h2>
+    </hgroup>
+    <article class="smaller">
+        <img src="imgs/gonoob-ppcode.png" class="reflect">
+    </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Pixelpixel</h2>
+    </hgroup>
+    <article class="smaller">
+        <img src="imgs/gonoob-ppfirst.png" class="reflect">
+    </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Picli</h2>
+    </hgroup>
+    <article>
+        To get started, you only need <code>picli</code> installed.
+        <ul>
+            <li>Go to <a href="http://github.com/voxelbrain/pixelpixel">pixelpixel’s GitHub page</a></li>
+            <li>Download the binary for your platform listed in the README</li>
+            <li>Put it in your <code>$PATH</code></li>
+        </ul>
+
+        If you are one of the eager students and have (or going to have) the
+        go toolchain installed, you can do:
+
+        <pre class="prettyprint" data-lang="bash">
+            go get github.com/voxelbrain/pixelpixel/picli
+        </pre>
+    </article>
 </slide>
