@@ -1,0 +1,17 @@
+<template id="tpl">
+	I'm the text!
+	<script>
+		alert("oh hai");
+	</script>
+</template>
+<button id="btn">Click me</button>
+<div id="ctr"></div>
+<script>
+	var tpl = document.querySelector('#tpl');
+	var btn = document.querySelector('#btn');
+	var ctr = document.querySelector('#ctr');
+	var clone = tpl.content.cloneNode(true);
+	btn.addEventListener('click', function() {
+		ctr.appendChild(clone);
+	})
+</script>
