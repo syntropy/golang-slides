@@ -10,16 +10,14 @@
     "homepage": "http://github.com/surma"
 }
 <style>
-    ol{
-    }
-    ol.huge {
+    .huge {
         display: block;
     }
-    ol.huge li:before {
+    .huge li:before {
         content: '→ ';
         color: rgba(255,0,0,0.5);
     }
-    ol.huge li {
+    .huge li {
         font-size: 48px;
         line-height: 2em;
     }
@@ -41,13 +39,11 @@
         <h2>What is Polymer?</h2>
     </hgroup>
     <article>
-        <p>
-            <ol class="build huge">
-                <li><b>“platform.js”</b>: Collection of polyfills</li>
-                <li><b>“Polymer”</b>: Leightweight framework</li>
-                <li><b>“Polymer-Project”</b>: Google project</li>
-            </ol>
-        </p>
+        <ol class="build huge">
+            <li><b>“platform.js”</b>: Collection of polyfills</li>
+            <li><b>“Polymer”</b>: Leightweight framework</li>
+            <li><b>“Polymer-Project”</b>: Google project</li>
+        </ol>
     </article>
 </slide>
 <slide>
@@ -89,6 +85,13 @@
         <h2>Browser Technolgoy</h2>
         <h3>… for the process</h3>
     </hgroup>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>Heavily inspired by Rob Dodson's talk</li>
+            </ul>
+        </section>
+    </aside>
 </slide>
 <slide>
     <hgroup>
@@ -225,4 +228,257 @@
     <article>
         <img src="imgs/polymer-caniuse-shadowdom.png" class="reflect">
     </article>
+</slide>
+<slide>
+    <hgroup>
+        <h2>“Define an API”</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="javascript">
+            var tpl = document.querySelector("#some-template");
+            var SpoilerPrototype = Object.create(HTMLElement.prototype);
+            
+            SpoilerPrototype.createdCallback = function() {
+                var root = this.createShadowRoot();
+                root.appendChild(tpl.content.cloneNode(true));
+            };
+            
+            var Spoiler = document.register("spoiler-tag", {
+                prototype: SpoilerPrototype
+            }); </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>Tag names must contain a dash</li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>“Define an API”</h2>
+        <h3>Lifecycle callback</h3>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="javascript">
+SpoilerPrototype.createdCallback = function() { /* ... */ };
+SpoilerPrototype.enteredViewCallback = function() { /* ... */ };
+SpoilerPrototype.leftViewCallback = function() { /* ... */ };
+SpoilerPrototype.attributedChangedCallback = function(attrName, oldVal, newVal) { 
+    /* ... */
+}; </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li></li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>“Define an API”</h2>
+        <h3>Extensions</h3>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="javascript">
+            var MyButton = document.register("my-button", {
+                extends: "button",
+                prototype: Object.create(HTMLButtonElement.prototype)
+            }); </pre>
+        <pre class="prettyprint" data-lang="html">
+            &lt;button is="my-button"&gt;...&lt;/button&gt;</pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li></li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>“Define an API”</h2>
+        <h3>Blowing your mind</h3>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="html">
+            &lt;g-analytics
+                account="UA-44428880-1"
+                domain="localhost"&gt;
+            &lt;/g-analytics&gt;</pre>
+        vs.
+        <pre class="prettyprint" data-lang="html">
+            &lt;script&gt;
+                (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+                function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+                e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+                e.src='//www.google-analytics.com/analytics.js';
+                r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+                ga('create','UA-XXXXX-X');ga('send','pageview');
+            &lt;/script&gt;</pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li></li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>“Package it”</h2>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="html">
+            &lt;link rel="import" href="elements/spoiler-tag/spoiler-tag.html"&gt;</pre>
+        <pre class="prettyprint" data-lang="html">
+            &lt;template&gt;
+                &lt;!-- ... --&gt;
+            &lt;/template&gt;
+
+            &lt;script&gt;
+                var owner = document.currentScript.ownerDocument;
+                var tmpl = owner.querySelector("template");
+                
+                var SpoilerProto = Object.create(HTMLElement.prototype);
+                // ...
+            &lt;/script&gt;</pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li></li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>“Package it”</h2>
+        <h3>Support</h3>
+    </hgroup>
+    <article>
+        Nope.
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li>Chrome: Behind a flag. In Canary.</li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="static/ioslide/images/google_developers_icon_128.png"></aside>
+    <hgroup class="auto-fadein">
+        <h2>Livin' in the future</h2>
+        <h3>… with Polymer</h3>
+    </hgroup>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Polyfill</h2>
+        <h3>ALL the things</h3>
+    </hgroup>
+    <article>
+        <ul class="huge build">
+            <li>Polymer includes platform.js</li>
+            <li>Polymer itself is mostly syntactic sugar</li>
+        </ul>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li></li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Polymer</h2>
+        <h3>All in one step</h3>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="html">
+            &lt;polymer-element name="my-element"&gt;
+                &lt;template&gt;
+                    &lt;h2&gt;
+                        Hello, I'm a Polymer element
+                    &lt;/h2&gt;
+                &lt;/template&gt;
+                &lt;script&gt;
+                    Polymer("my-element", {});
+                &lt;/script&gt;
+            &lt;/polymer-element&gt; </pre>
+        <pre class="prettyprint" data-lang="html">
+            &lt;my-element&gt;&lt;/my-element&gt; </pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li></li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Polymer</h2>
+        <h3>Templating</h3>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="html">
+            &lt;polymer-element name="fav-color" attributes="color"&gt;
+                &lt;template&gt;
+                    My favorite color is
+                    &lt;span style="background: {{ color }}"&gt;{{ color }}&lt;/span&gt;
+                    &lt;input type="text" value="{{ color }}"&gt;
+                &lt;/template&gt;
+                &lt;script&gt;
+                    Polymer("fav-color", {
+                        color: "Orange"
+                    });
+                &lt;/script&gt;
+            &lt;/polymer-element&gt;</pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li></li>
+            </ul>
+        </section>
+    </aside>
+</slide>
+<slide>
+    <hgroup>
+        <h2>Polymer</h2>
+        <h3>More Lifecycling</h3>
+    </hgroup>
+    <article>
+        <pre class="prettyprint" data-lang="html">
+            &lt;polymer-element name="fav-color" attributes="color"&gt;
+                &lt;!-- ... --&gt;
+                &lt;script&gt;
+                    Polymer("fav-color", {
+                        color: "Orange",
+                        colorChanged: function() {
+                            // ...
+                        }
+                    });
+                &lt;/script&gt;
+            &lt;/polymer-element&gt;</pre>
+    </article>
+    <aside class="note">
+        <section>
+            <ul>
+                <li></li>
+            </ul>
+        </section>
+    </aside>
 </slide>
